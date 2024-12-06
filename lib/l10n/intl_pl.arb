@@ -1,0 +1,20 @@
+{
+    "@@locale": "pl",
+
+    "homePageRefreshButtonTitle": "Odśwież",
+    "homePageSettingsButtonTitle": "Ustawienia",
+    "homePageTemperature": "{temperature}°C",
+    "homePageErrorTitle": "Coś poszło nie tak, spróbuj ponownie",
+    "homePageLocationDisabledTitle": "Lokalizacja jest wyłączona, włącz ją, aby kontynuować",
+    "homePageLocationPermissionDeniedTitle": "Odmowa uprawnień lokalizacji, nadaj je w ustawieniach systemowych",
+
+    "settingsPageLanguage": "Język",
+    "settingsPageLanguageEnglish": "Angielski",
+    "settingsPageLanguagePolish": "Polski",
+    "settingsPageCloseButtonTitle": "Zamknij",
+    "settingsPageLocationPermission": "Uprawnienia lokalizacji",
+    "settingsPageLocationPermissionGranted": "Uprawnienia lokalizacji przyznane",
+    "settingsPageLocationPermissionDenied": "Uprawnienia lokalizacji odmówione",
+    "settingsPageLocationPermissionInfo": "By uzyskać dostęp do lokalizacji, przyznaj uprawnienia w ustawieniach systemowych"
+
+}

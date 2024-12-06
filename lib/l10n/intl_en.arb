@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+
+    "homePageRefreshButtonTitle": "Refresh",
+    "homePageSettingsButtonTitle": "Settings",
+    "homePageTemperature": "{temperature}°C",
+    "homePageErrorTitle": "Something went wrong, please try again",
+    "homePageLocationDisabledTitle": "Location is disabled, enable it to continue",
+    "homePageLocationPermissionDeniedTitle": "Location permission is denied, grant it in system settings",
+
+    "settingsPageLanguage": "Language",
+    "settingsPageLanguageEnglish": "English",
+    "settingsPageLanguagePolish": "Polish",
+    "settingsPageCloseButtonTitle": "Close",
+    "settingsPageLocationPermission": "Location permission",
+    "settingsPageLocationPermissionGranted": "Location permission granted",
+    "settingsPageLocationPermissionDenied": "Location permission denied",
+    "settingsPageLocationPermissionInfo": "To access location, grant permission in system settings"
+}

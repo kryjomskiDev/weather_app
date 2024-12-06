@@ -1,0 +1,1 @@
+const currentWeather = 'weather';
