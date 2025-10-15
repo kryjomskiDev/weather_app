@@ -62,7 +62,7 @@ class HomePage extends HookWidget {
           HomeBody(
             currentWeather: currentWeather,
             cubit: cubit,
-            isLaoding: true,
+            isLoading: true,
           ),
         HomeStateLoading() => AppLoadingIndicator(
             color: context.getColors().white,

@@ -30,7 +30,7 @@ class HomeCubit extends SafetyCubit<HomeState> {
     this._getCurrentLocationUseCase,
   ) : super(const HomeState.idle());
 
-  late String _selectedLangaugeCode;
+  late String _selectedLanguageCode;
   late CurrentWeather _currentWeather;
 
   Future<void> init({bool isRefreshPage = false}) async {
@@ -62,12 +62,12 @@ class HomeCubit extends SafetyCubit<HomeState> {
 
       final currentLocation = await _getCurrentLocationUseCase();
 
-      _selectedLangaugeCode = _getSelectedLanguageCodeUseCase() ?? englishLanguageCode;
+      _selectedLanguageCode = _getSelectedLanguageCodeUseCase() ?? englishLanguageCode;
 
       _currentWeather = await _getCurrentWeatherUseCase(
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
-        languageCode: _selectedLangaugeCode,
+        languageCode: _selectedLanguageCode,
       );
 
       emit(HomeState.loaded(currentWeather: _currentWeather));

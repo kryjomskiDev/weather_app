@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/networking_config/query.dart';
 
-const authorizationHeaderValuePrefix = 'Bearer';
-
 class AuthHeaderInterceptor extends Interceptor {
   @override
   Future<void> onRequest(

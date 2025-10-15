@@ -15,5 +15,5 @@
     "settingsPageLocationPermission": "Location permission",
     "settingsPageLocationPermissionGranted": "Location permission granted",
     "settingsPageLocationPermissionDenied": "Location permission denied",
-    "settingsPageLocationPermissionInfo": "To access location, grant permission in system settings"
+    "settingsPageLocationPermissionInfo": "To change location permissions, go to system settings"
 }

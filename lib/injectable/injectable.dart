@@ -12,5 +12,10 @@ final getIt = GetIt.instance;
 )
 Future<void> configureDependencies(String environment) async {
   await $initGetIt(getIt, environment: environment);
-  registerInterceptors();
+  if (environment != Environment.test) registerInterceptors();
+}
+
+void registerOverride<T extends Object>(T Function() createMock) {
+  if (getIt.isRegistered<T>()) getIt.unregister<T>();
+  getIt.registerLazySingleton<T>(() => createMock());
 }

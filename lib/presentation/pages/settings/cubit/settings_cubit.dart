@@ -20,17 +20,17 @@ class SettingsCubit extends SafetyCubit<SettingsState> {
     this._checkLocationPermissionStatusUseCase,
   ) : super(const SettingsState.idle());
 
-  late String _selectedLangaugeCode;
+  late String _selectedLanguageCode;
   late LocationPermissionStatus _locationPermissionStatus;
 
   Future<void> init() async {
     try {
       emit(const SettingsState.loading());
-      _selectedLangaugeCode = _getSelectedLanguageCodeUseCase() ?? englishLanguageCode;
+      _selectedLanguageCode = _getSelectedLanguageCodeUseCase() ?? englishLanguageCode;
       _locationPermissionStatus = await _checkLocationPermissionStatusUseCase();
 
       emit(SettingsState.loaded(
-        selectedLanguageCode: _selectedLangaugeCode,
+        selectedLanguageCode: _selectedLanguageCode,
         locationPermissionStatus: _locationPermissionStatus,
       ));
     } catch (error, st) {
@@ -39,11 +39,11 @@ class SettingsCubit extends SafetyCubit<SettingsState> {
     }
   }
 
-  Future<void> selectLangauge(String languageCode) async {
+  Future<void> selectLanguage(String languageCode) async {
     try {
       emit(const SettingsState.loading());
 
-      _selectedLangaugeCode = languageCode;
+      _selectedLanguageCode = languageCode;
       await _saveLanguageCodeUseCase(languageCode);
 
       emit(const SettingsState.languageSelected());
@@ -54,7 +54,7 @@ class SettingsCubit extends SafetyCubit<SettingsState> {
   }
 
   void onLanguageSelected() => emit(SettingsState.loaded(
-        selectedLanguageCode: _selectedLangaugeCode,
+        selectedLanguageCode: _selectedLanguageCode,
         locationPermissionStatus: _locationPermissionStatus,
       ));
 

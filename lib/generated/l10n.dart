@@ -180,10 +180,10 @@ class Strings {
     );
   }
 
-  /// `To access location, grant permission in system settings`
+  /// `To change location permissions, go to system settings`
   String get settingsPageLocationPermissionInfo {
     return Intl.message(
-      'To access location, grant permission in system settings',
+      'To change location permissions, go to system settings',
       name: 'settingsPageLocationPermissionInfo',
       desc: '',
       args: [],

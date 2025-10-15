@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/injectable/injectable.dart';
 import 'package:weather_app/injectable/staging_environment.dart';
+import 'package:weather_app/presentation/router/router.dart';
 import 'package:weather_app/weather_app.dart';
 
 const String _environmentDefineKey = 'ENVIRONMENT';
@@ -32,7 +33,7 @@ Future<void>? runMobileApp(final String environment) => runZonedGuarded<Future<v
 
         await configureDependencies(environment);
 
-        runApp(const WeatherApp());
+        runApp(WeatherApp(appRouter: router));
       },
       (error, stackTrace) => _errorHandler(error, stackTrace),
     );

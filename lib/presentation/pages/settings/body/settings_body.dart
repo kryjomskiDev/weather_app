@@ -37,20 +37,22 @@ class SettingsBody extends HookWidget with ExtensionMixin {
           ),
           const SizedBox(height: Dimens.m),
           WeatherAppRadioButton(
+            key: const Key('en-language-button'),
             isSelected: controller.value == englishLanguageCode,
             title: Strings.of(context).settingsPageLanguageEnglish,
             onTap: () {
               controller.value = englishLanguageCode;
-              cubit.selectLangauge(controller.value);
+              cubit.selectLanguage(controller.value);
             },
           ),
           const SizedBox(height: Dimens.s),
           WeatherAppRadioButton(
+            key: const Key('pl-language-button'),
             isSelected: controller.value == polishLanguageCode,
             title: Strings.of(context).settingsPageLanguagePolish,
             onTap: () async {
               controller.value = polishLanguageCode;
-              await cubit.selectLangauge(controller.value);
+              await cubit.selectLanguage(controller.value);
             },
           ),
           const SizedBox(height: Dimens.l),

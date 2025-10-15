@@ -18,6 +18,7 @@ class WeatherAppRadioButton extends StatelessWidget with ExtensionMixin {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: onTap,
+        behavior: HitTestBehavior.opaque,
         child: Row(
           children: [
             Container(

@@ -9,14 +9,14 @@ import 'package:weather_app/style/dimens.dart';
 import 'package:weather_app/style/number_formats.dart';
 
 class HomeBody extends StatelessWidget with ExtensionMixin {
-  final bool isLaoding;
+  final bool isLoading;
   final CurrentWeather currentWeather;
   final HomeCubit cubit;
 
   const HomeBody({
     required this.cubit,
     required this.currentWeather,
-    this.isLaoding = false,
+    this.isLoading = false,
     super.key,
   });
 
@@ -65,20 +65,20 @@ class HomeBody extends StatelessWidget with ExtensionMixin {
               style: AppTypography.headingLarge.copyWith(color: context.getColors().white),
             ),
             Text(
-              currentWeather.descritpion,
+              currentWeather.description,
               textAlign: TextAlign.center,
               style: AppTypography.bodyRegular.copyWith(color: context.getColors().white),
             ),
             const Spacer(),
             WeatherAppFilledButton(
               title: Strings.of(context).homePageRefreshButtonTitle,
-              isLoading: isLaoding,
+              isLoading: isLoading,
               onTap: () => cubit.init(isRefreshPage: true),
             ),
             const SizedBox(height: Dimens.s),
             WeatherAppFilledButton(
               title: Strings.of(context).homePageSettingsButtonTitle,
-              onTap: isLaoding ? null : cubit.goToSettings,
+              onTap: isLoading ? null : cubit.goToSettings,
             ),
           ],
         ),

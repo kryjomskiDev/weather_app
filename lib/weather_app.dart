@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/generated/l10n.dart';
 import 'package:weather_app/injectable/injectable.dart';
-import 'package:weather_app/presentation/router/router.dart';
 import 'package:weather_app/style/app_typography.dart';
 import 'package:weather_app/style/themes.dart';
 import 'package:weather_app/utils/l10n_model.dart';
@@ -11,7 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:hooked_bloc/hooked_bloc.dart';
 
 class WeatherApp extends StatelessWidget {
+  final GoRouter appRouter;
+
   const WeatherApp({
+    required this.appRouter,
     super.key,
   });
 
@@ -29,7 +32,7 @@ class WeatherApp extends StatelessWidget {
             ],
             child: Consumer<L10nModel>(
               builder: (context, model, child) => MaterialApp.router(
-                routerConfig: router,
+                routerConfig: appRouter,
                 theme: ThemeData(
                   colorScheme: const ColorScheme.light(),
                   fontFamily: AppTypography.fontFamily,

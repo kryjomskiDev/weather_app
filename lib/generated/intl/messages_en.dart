@@ -52,6 +52,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Location permission granted"),
         "settingsPageLocationPermissionInfo":
             MessageLookupByLibrary.simpleMessage(
-                "To access location, grant permission in system settings")
+                "To change location permissions, go to system settings")
       };
 }
