@@ -12,15 +12,12 @@ final router = GoRouter(
     GoRoute(
       path: WeatherAppRoutes.home.path,
       name: WeatherAppRoutes.home.name,
-      pageBuilder: (_, __) => _noTransition(child: const HomePage()),
+      pageBuilder: (context, state) => _noTransition(child: const HomePage()),
       routes: [
         GoRoute(
           path: WeatherAppRoutes.settings.path,
           name: WeatherAppRoutes.settings.name,
-          pageBuilder: (_, state) => _defaultTransition(
-            state: state,
-            child: const SettingsPage(),
-          ),
+          pageBuilder: (_, state) => _defaultTransition(state: state, child: const SettingsPage()),
         ),
       ],
     ),
@@ -32,9 +29,7 @@ NoTransitionPage _noTransition({required Widget child}) => NoTransitionPage(chil
 CustomTransitionPage _defaultTransition<T>({required GoRouterState state, required Widget child}) =>
     CustomTransitionPage(
       key: state.pageKey,
-      transitionsBuilder: (_, animation, __, child) => FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
       child: child,
     );

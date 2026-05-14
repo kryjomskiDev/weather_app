@@ -7,6 +7,4 @@ part of 'weather_temp_info_dto.dart';
 // **************************************************************************
 
 WeatherTempInfoDto _$WeatherTempInfoDtoFromJson(Map<String, dynamic> json) =>
-    WeatherTempInfoDto(
-      (json['temp'] as num).toDouble(),
-    );
+    WeatherTempInfoDto((json['temp'] as num).toDouble());

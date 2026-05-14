@@ -12,10 +12,9 @@
         "args": [
           "--flavor",
           "dev",
-          "--dart-define=ENVIRONMENT=dev",
           "--target",
           "lib/main.dart",
-          "--dart-define=API_KEY=6952e3f3da15fbb4919ae12ef633fce9",
+          "--dart-define-from-file=lib/config/envs_dev.json",
         ]
       },
       {
@@ -26,10 +25,9 @@
         "args": [
           "--flavor",
           "staging",
-          "--dart-define=ENVIRONMENT=staging",
           "--target",
           "lib/main.dart",
-          "--dart-define=API_KEY=6952e3f3da15fbb4919ae12ef633fce9",
+          "--dart-define-from-file=lib/config/envs_staging.json",
         ]
       },
       {
@@ -40,10 +38,9 @@
         "args": [
           "--flavor",
           "production",
-          "--dart-define=ENVIRONMENT=production",
+          "--dart-define-from-file=lib/config/envs_production.json",
           "--target",
           "lib/main.dart",
-          "--dart-define=API_KEY=6952e3f3da15fbb4919ae12ef633fce9",
         ]
       }
     ]

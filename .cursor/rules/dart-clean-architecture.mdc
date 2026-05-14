@@ -1,0 +1,28 @@
+---
+description: Domain / data / presentation rules for lib Dart code
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Layering (lib/)
+
+## Domain (`lib/domain/**`)
+
+- Expose narrow ports: `abstract interface class` for services, use cases, and stores.
+- Keep domain models free of JSON/HTTP/DTO types and avoid `flutter/widgets.dart` unless there is an existing exception in that module.
+
+## Data (`lib/data/**`)
+
+- Implement domain ports with classes named `*Impl`, registered via `@LazySingleton(as: Interface)` or similar injectable annotations.
+- **DTOs** live beside features (`*_dto.dart`); use `json_serializable` / Retrofit as the project already does; map to domain in the data layer (`toDomain()`, mappers, or constructors).
+
+## Presentation (`lib/presentation/**`)
+
+- **Cubits** extend project cubit base types (e.g. `SafetyCubit`) where used; inject use cases/services through constructors with `@injectable`.
+- **Router**: add routes in `router.dart` using `WeatherAppRoutes` for path/name consistency.
+- Reuse shared UI from `lib/presentation/widgets/` and theming from `lib/style/`.
+
+## Cross-cutting
+
+- Prefer existing **extensions** and **utils** before duplicating helpers.
+- Respect **strict** analyzer settings: avoid untyped collections and unnecessary casts.

@@ -7,7 +7,7 @@ class ThemeModel with ChangeNotifier {
 
   AppTheme get getTheme => _currentTheme;
 
-  void setTheme(themeMode) {
+  void setTheme(AppTheme themeMode) {
     _currentTheme = themeMode;
     notifyListeners();
   }

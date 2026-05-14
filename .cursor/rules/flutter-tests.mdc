@@ -1,0 +1,26 @@
+---
+description: Unit and widget test conventions (mockito, bloc_test)
+globs: test/**/*.dart
+alwaysApply: false
+---
+
+# Tests
+
+## Layout
+
+- Mirror production paths under `test/unit_tests/` and `test/widget_tests/` as in the existing suite.
+- Use shared bootstraps in `test/widget_tests/utils/` (and `integration_test/utils/` for integration tests) when adding new widget/integration tests.
+
+## Mocking
+
+- Prefer `mockito` with `@GenerateMocks([...])` at the bottom of the test library and `import '...mocks.dart';` for generated mocks.
+- After changing `@GenerateMocks` or constructor dependencies, regenerate mocks with **build_runner** (see `AGENTS.md`).
+
+## Bloc/cubit
+
+- Use `bloc_test` (`blocTest`, `expect`) following patterns in existing `*_cubit_test.dart` files.
+- When testing cubits that use `getIt`, use `registerOverride` from `injectable.dart` or the project’s existing test setup patterns.
+
+## Imports
+
+- Use `package:weather_app/...` imports in tests, consistent with `analysis_options.yaml`.

@@ -1,0 +1,15 @@
+---
+description: Weather Flutter app — stack, layers, and codegen entrypoints
+alwaysApply: true
+---
+
+# Project context
+
+Flutter weather app using **clean layering** (`lib/domain`, `lib/data`, `lib/presentation`), **GetIt + injectable** for DI, **go_router**, **dio + retrofit**, **bloc/cubit** (often with **hooked_bloc** / hooks on UI).
+
+- Use **package imports** (`package:weather_app/...`), never relative `lib/` imports.
+- **Domain** defines `abstract interface class` ports; **data** provides `*Impl` and DTOs; **presentation** hosts pages, cubits, and widgets.
+- After changing injectable annotations, Retrofit APIs, `json_serializable` classes, or `@GenerateMocks`, run `dart run build_runner build --delete-conflicting-outputs`.
+- Do not hand-edit `*.g.dart`, `*.mocks.dart`, `lib/generated/**`, or `lib/injectable/injectable.config.dart`.
+
+See `AGENTS.md` for the full directory map and testing layout.

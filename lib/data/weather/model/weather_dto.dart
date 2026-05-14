@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:weather_app/data/weather/model/weather_details_dto.dart';
 import 'package:weather_app/data/weather/model/weather_temp_info_dto.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';

@@ -3,31 +3,23 @@ import 'dart:io';
 import 'package:dio/io.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mockito/annotations.dart';
+import 'package:weather_app/config/envs.dart';
 import 'package:weather_app/data/interceptors/api_key_interceptor.dart';
-import 'package:weather_app/domain/env/get_api_url_use_case.dart';
-import 'package:weather_app/injectable/dio_injectable/dio_injectable.mocks.dart';
 import 'package:weather_app/injectable/injectable.dart';
 import 'package:weather_app/injectable/staging_environment.dart';
 import 'package:system_proxy/system_proxy.dart';
 
 const timeout = Duration(seconds: 20);
 
-@GenerateMocks([Dio])
 @module
 abstract class DioModule {
   @lazySingleton
   @dev
   @prod
   @staging
-  Dio dio(GetApiUrlUseCase getApiUrlUseCase) {
+  Dio dio(Envs envs) {
     final dio = Dio(
-      BaseOptions(
-        connectTimeout: timeout,
-        receiveTimeout: timeout,
-        sendTimeout: timeout,
-        baseUrl: getApiUrlUseCase.getApiUrl(),
-      ),
+      BaseOptions(connectTimeout: timeout, receiveTimeout: timeout, sendTimeout: timeout, baseUrl: envs.apiUrl),
     );
 
     SystemProxy.getProxySettings().then((Map<String, String>? systemProxy) {
@@ -47,13 +39,11 @@ abstract class DioModule {
 
   @singleton
   @test
-  Dio testDio() => MockDio();
+  Dio testDio() => Dio(BaseOptions());
 }
 
 void registerInterceptors() {
   final dio = getIt<Dio>();
 
-  dio.interceptors.addAll(
-    [AuthHeaderInterceptor()],
-  );
+  dio.interceptors.addAll([AuthHeaderInterceptor(getIt<Envs>())]);
 }

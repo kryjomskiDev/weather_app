@@ -48,7 +48,7 @@ class HomeBody extends StatelessWidget with ExtensionMixin {
               _iconPath,
               fit: BoxFit.cover,
               height: Dimens.xxxxc + Dimens.xxxc,
-              errorBuilder: (_, __, ___) => Icon(
+              errorBuilder: (context, error, stackTrace) => Icon(
                 Icons.do_not_disturb_alt_rounded,
                 color: context.getColors().white,
               ),
