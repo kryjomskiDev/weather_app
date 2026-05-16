@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weather_app/extensions/build_context_extension.dart';
+import 'package:weather_app/generated/l10n.dart';
 import 'package:weather_app/style/app_typography.dart';
 import 'package:weather_app/style/dimens.dart';
 
@@ -98,6 +99,9 @@ class WeatherAppTextField extends HookWidget {
                 filled: true,
                 suffixIcon: isPassword
                     ? IconButton(
+                        tooltip: isObscure.value
+                            ? Strings.of(context).a11yShowPassword
+                            : Strings.of(context).a11yHidePassword,
                         icon: Icon(
                           isObscure.value ? Icons.visibility : Icons.visibility_off,
                           color: context.getColors().textPrimary,
@@ -130,7 +134,9 @@ class WeatherAppTextField extends HookWidget {
             const SizedBox(height: Dimens.xs),
             Row(
               children: <Widget>[
-                Icon(Icons.error, color: context.getColors().error),
+                ExcludeSemantics(
+                  child: Icon(Icons.error, color: context.getColors().error),
+                ),
                 const SizedBox(width: Dimens.xxxs),
                 Expanded(
                   child: Text(

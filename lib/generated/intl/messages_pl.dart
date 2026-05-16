@@ -20,10 +20,30 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'pl';
 
-  static String m0(temperature) => "${temperature}°C";
+  static String m0(action) => "${action}, ładowanie";
+
+  static String m1(location, temperature, condition, description) =>
+      "${location}, ${temperature}, ${condition}, ${description}";
+
+  static String m2(language, selectionState) =>
+      "${language}, ${selectionState}";
+
+  static String m3(condition) => "Ikona pogody: ${condition}";
+
+  static String m4(temperature) => "${temperature}°C";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "a11yButtonLoading": m0,
+    "a11yCurrentWeatherSummary": m1,
+    "a11yHidePassword": MessageLookupByLibrary.simpleMessage("Ukryj hasło"),
+    "a11yLanguageOption": m2,
+    "a11yLoading": MessageLookupByLibrary.simpleMessage("Ładowanie"),
+    "a11yNotSelected": MessageLookupByLibrary.simpleMessage("niewybrane"),
+    "a11ySearchSubmit": MessageLookupByLibrary.simpleMessage("Szukaj"),
+    "a11ySelected": MessageLookupByLibrary.simpleMessage("wybrane"),
+    "a11yShowPassword": MessageLookupByLibrary.simpleMessage("Pokaż hasło"),
+    "a11yWeatherIcon": m3,
     "authEmailLabel": MessageLookupByLibrary.simpleMessage("E-mail"),
     "authErrorGeneric": MessageLookupByLibrary.simpleMessage(
       "Coś poszło nie tak. Spróbuj ponownie.",
@@ -55,7 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homePageSettingsButtonTitle": MessageLookupByLibrary.simpleMessage(
       "Ustawienia",
     ),
-    "homePageTemperature": m0,
+    "homePageTemperature": m4,
     "mainNavHome": MessageLookupByLibrary.simpleMessage("Główna"),
     "mainNavSearch": MessageLookupByLibrary.simpleMessage("Szukaj"),
     "mainNavSettings": MessageLookupByLibrary.simpleMessage("Ustawienia"),

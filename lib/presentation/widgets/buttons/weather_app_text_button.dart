@@ -15,18 +15,25 @@ class WeatherAppTextButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    child: Text(
-      title,
-      textAlign: TextAlign.center,
-      style:
-          textStyle ??
-          AppTypography.bodyMediumDefault.copyWith(
-            color: context.getColors().white,
-            decoration: TextDecoration.underline,
-            decorationColor: context.getColors().white,
-          ),
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    enabled: onTap != null,
+    label: title,
+    child: GestureDetector(
+      onTap: onTap,
+      child: ExcludeSemantics(
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style:
+              textStyle ??
+              AppTypography.bodyMediumDefault.copyWith(
+                color: context.getColors().white,
+                decoration: TextDecoration.underline,
+                decorationColor: context.getColors().white,
+              ),
+        ),
+      ),
     ),
   );
 }

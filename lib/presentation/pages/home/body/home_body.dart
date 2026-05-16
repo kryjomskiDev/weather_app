@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';
 import 'package:weather_app/extensions/extension_mixin.dart';
+import 'package:weather_app/generated/l10n.dart';
 import 'package:weather_app/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:weather_app/presentation/widgets/current_weather_card.dart';
 import 'package:weather_app/style/app_typography.dart';
@@ -30,9 +31,11 @@ class HomeBody extends StatelessWidget with ExtensionMixin {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Icon(
-              Icons.location_on_outlined,
-              color: context.getColors().textPrimary,
+            ExcludeSemantics(
+              child: Icon(
+                Icons.location_on_outlined,
+                color: context.getColors().textPrimary,
+              ),
             ),
             const SizedBox(width: Dimens.s),
             Text(
@@ -44,6 +47,7 @@ class HomeBody extends StatelessWidget with ExtensionMixin {
             const Spacer(),
             IconButton(
               onPressed: () => cubit.init(isRefreshPage: true),
+              tooltip: Strings.of(context).homePageRefreshButtonTitle,
               icon: const Icon(Icons.refresh_outlined),
               color: context.getColors().textPrimary,
             ),

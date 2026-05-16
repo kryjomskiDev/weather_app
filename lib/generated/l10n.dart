@@ -388,6 +388,96 @@ class Strings {
       args: [],
     );
   }
+
+  /// `Loading`
+  String get a11yLoading {
+    return Intl.message('Loading', name: 'a11yLoading', desc: '', args: []);
+  }
+
+  /// `{action}, loading`
+  String a11yButtonLoading(Object action) {
+    return Intl.message(
+      '$action, loading',
+      name: 'a11yButtonLoading',
+      desc: '',
+      args: [action],
+    );
+  }
+
+  /// `Show password`
+  String get a11yShowPassword {
+    return Intl.message(
+      'Show password',
+      name: 'a11yShowPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide password`
+  String get a11yHidePassword {
+    return Intl.message(
+      'Hide password',
+      name: 'a11yHidePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get a11ySearchSubmit {
+    return Intl.message('Search', name: 'a11ySearchSubmit', desc: '', args: []);
+  }
+
+  /// `{location}, {temperature}, {condition}, {description}`
+  String a11yCurrentWeatherSummary(
+    Object location,
+    Object temperature,
+    Object condition,
+    Object description,
+  ) {
+    return Intl.message(
+      '$location, $temperature, $condition, $description',
+      name: 'a11yCurrentWeatherSummary',
+      desc: '',
+      args: [location, temperature, condition, description],
+    );
+  }
+
+  /// `{condition} weather icon`
+  String a11yWeatherIcon(Object condition) {
+    return Intl.message(
+      '$condition weather icon',
+      name: 'a11yWeatherIcon',
+      desc: '',
+      args: [condition],
+    );
+  }
+
+  /// `{language}, {selectionState}`
+  String a11yLanguageOption(Object language, Object selectionState) {
+    return Intl.message(
+      '$language, $selectionState',
+      name: 'a11yLanguageOption',
+      desc: '',
+      args: [language, selectionState],
+    );
+  }
+
+  /// `selected`
+  String get a11ySelected {
+    return Intl.message('selected', name: 'a11ySelected', desc: '', args: []);
+  }
+
+  /// `not selected`
+  String get a11yNotSelected {
+    return Intl.message(
+      'not selected',
+      name: 'a11yNotSelected',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Strings> {

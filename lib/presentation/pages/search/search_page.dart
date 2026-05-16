@@ -43,6 +43,7 @@ class SearchPage extends HookWidget {
                   const SizedBox(width: Dimens.s),
                   IconButton(
                     onPressed: () => cubit.search(controller.text),
+                    tooltip: Strings.of(context).a11ySearchSubmit,
                     icon: Icon(
                       Icons.search,
                       color: context.getColors().textPrimary,

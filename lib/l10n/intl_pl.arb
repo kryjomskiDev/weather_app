@@ -40,5 +40,16 @@
     "splashPageWelcomeTitle": "Witaj!",
     "splashPageWelcomeDescription": "Sprawdź pogodę w swoim mieście, w dowolnym miejscu na świecie.",
     "splashPageSignInButtonTitle": "Zaloguj się",
-    "splashPageDontHaveAccountTitle": "Nie masz konta? Zarejestruj się"
+    "splashPageDontHaveAccountTitle": "Nie masz konta? Zarejestruj się",
+
+    "a11yLoading": "Ładowanie",
+    "a11yButtonLoading": "{action}, ładowanie",
+    "a11yShowPassword": "Pokaż hasło",
+    "a11yHidePassword": "Ukryj hasło",
+    "a11ySearchSubmit": "Szukaj",
+    "a11yCurrentWeatherSummary": "{location}, {temperature}, {condition}, {description}",
+    "a11yWeatherIcon": "Ikona pogody: {condition}",
+    "a11yLanguageOption": "{language}, {selectionState}",
+    "a11ySelected": "wybrane",
+    "a11yNotSelected": "niewybrane"
 }

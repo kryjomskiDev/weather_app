@@ -40,5 +40,16 @@
     "splashPageWelcomeTitle": "Welcome!",
     "splashPageWelcomeDescription": "Check the weather in your city, anywhere in the world.",
     "splashPageSignInButtonTitle": "Sign in",
-    "splashPageDontHaveAccountTitle": "Don't have an account? Sign up"
+    "splashPageDontHaveAccountTitle": "Don't have an account? Sign up",
+
+    "a11yLoading": "Loading",
+    "a11yButtonLoading": "{action}, loading",
+    "a11yShowPassword": "Show password",
+    "a11yHidePassword": "Hide password",
+    "a11ySearchSubmit": "Search",
+    "a11yCurrentWeatherSummary": "{location}, {temperature}, {condition}, {description}",
+    "a11yWeatherIcon": "{condition} weather icon",
+    "a11yLanguageOption": "{language}, {selectionState}",
+    "a11ySelected": "selected",
+    "a11yNotSelected": "not selected"
 }

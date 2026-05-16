@@ -13,35 +13,46 @@ class CurrentWeatherCard extends StatelessWidget {
   const CurrentWeatherCard({required this.currentWeather, super.key});
 
   @override
-  Widget build(BuildContext context) => WeatherAppCard(
-    child: Column(
-      children: <Widget>[
-        Image.network(
-          currentWeather.iconPath,
-          fit: BoxFit.cover,
-          height: Dimens.xxxxc + Dimens.xxxc,
-          errorBuilder: (_, _, _) => Icon(
-            Icons.do_not_disturb_alt_rounded,
-            color: context.getColors().white,
-          ),
+  Widget build(BuildContext context) => Semantics(
+    container: true,
+    label: Strings.of(context).a11yCurrentWeatherSummary(
+      currentWeather.locationName,
+      Strings.of(context).homePageTemperature(currentWeather.formattedTemperature),
+      currentWeather.title,
+      currentWeather.description,
+    ),
+    child: ExcludeSemantics(
+      child: WeatherAppCard(
+        child: Column(
+          children: <Widget>[
+            Image.network(
+              currentWeather.iconPath,
+              fit: BoxFit.cover,
+              height: Dimens.xxxxc + Dimens.xxxc,
+              errorBuilder: (_, _, _) => Icon(
+                Icons.do_not_disturb_alt_rounded,
+                color: context.getColors().white,
+              ),
+            ),
+            const SizedBox(height: Dimens.l),
+            Text(
+              Strings.of(context).homePageTemperature(currentWeather.formattedTemperature),
+              textAlign: TextAlign.center,
+              style: AppTypography.headingBig.copyWith(color: context.getColors().white),
+            ),
+            Text(
+              currentWeather.title,
+              textAlign: TextAlign.center,
+              style: AppTypography.headingLarge.copyWith(color: context.getColors().white),
+            ),
+            Text(
+              currentWeather.description,
+              textAlign: TextAlign.center,
+              style: AppTypography.bodyRegular.copyWith(color: context.getColors().white),
+            ),
+          ],
         ),
-        const SizedBox(height: Dimens.l),
-        Text(
-          Strings.of(context).homePageTemperature(currentWeather.formattedTemperature),
-          textAlign: TextAlign.center,
-          style: AppTypography.headingBig.copyWith(color: context.getColors().white),
-        ),
-        Text(
-          currentWeather.title,
-          textAlign: TextAlign.center,
-          style: AppTypography.headingLarge.copyWith(color: context.getColors().white),
-        ),
-        Text(
-          currentWeather.description,
-          textAlign: TextAlign.center,
-          style: AppTypography.bodyRegular.copyWith(color: context.getColors().white),
-        ),
-      ],
+      ),
     ),
   );
 }

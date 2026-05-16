@@ -38,6 +38,12 @@ class SettingsBody extends HookWidget with ExtensionMixin {
             key: const Key('en-language-button'),
             isSelected: controller.value == englishLanguageCode,
             title: Strings.of(context).settingsPageLanguageEnglish,
+            semanticsLabel: Strings.of(context).a11yLanguageOption(
+              Strings.of(context).settingsPageLanguageEnglish,
+              controller.value == englishLanguageCode
+                  ? Strings.of(context).a11ySelected
+                  : Strings.of(context).a11yNotSelected,
+            ),
             onTap: () {
               controller.value = englishLanguageCode;
               cubit.selectLanguage(controller.value);
@@ -48,6 +54,12 @@ class SettingsBody extends HookWidget with ExtensionMixin {
             key: const Key('pl-language-button'),
             isSelected: controller.value == polishLanguageCode,
             title: Strings.of(context).settingsPageLanguagePolish,
+            semanticsLabel: Strings.of(context).a11yLanguageOption(
+              Strings.of(context).settingsPageLanguagePolish,
+              controller.value == polishLanguageCode
+                  ? Strings.of(context).a11ySelected
+                  : Strings.of(context).a11yNotSelected,
+            ),
             onTap: () async {
               controller.value = polishLanguageCode;
               await cubit.selectLanguage(controller.value);

@@ -39,10 +39,12 @@ class SplashPage extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Spacer(),
-              SvgPicture.asset(
-                Assets.images.svg.weather,
-                width: WeatherAppConstants.splashWeatherIconSize,
-                height: WeatherAppConstants.splashWeatherIconSize,
+              ExcludeSemantics(
+                child: SvgPicture.asset(
+                  Assets.images.svg.weather,
+                  width: WeatherAppConstants.splashWeatherIconSize,
+                  height: WeatherAppConstants.splashWeatherIconSize,
+                ),
               ),
               Text(
                 Strings.of(context).splashPageWelcomeTitle,
