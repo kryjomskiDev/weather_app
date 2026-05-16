@@ -7,10 +7,6 @@ sealed class SplashPresentationEvent extends Equatable {
   List<Object?> get props => <Object?>[];
 }
 
-class SplashNavigateToHomeEvent extends SplashPresentationEvent {
-  const SplashNavigateToHomeEvent();
-}
-
 class SplashNavigateToLoginEvent extends SplashPresentationEvent {
   const SplashNavigateToLoginEvent();
 }

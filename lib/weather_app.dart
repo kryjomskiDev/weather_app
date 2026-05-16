@@ -5,6 +5,8 @@ import 'package:nested/nested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/generated/l10n.dart';
 import 'package:weather_app/injectable/injectable.dart';
+import 'package:weather_app/presentation/router/weather_app_routes.dart';
+import 'package:weather_app/presentation/widgets/session_expiration_checker/session_expiration_checker.dart';
 import 'package:weather_app/style/app_typography.dart';
 import 'package:weather_app/style/themes.dart';
 import 'package:weather_app/utils/l10n_model.dart';
@@ -13,9 +15,11 @@ import 'package:hooked_bloc/hooked_bloc.dart';
 
 class WeatherApp extends StatelessWidget {
   final GoRouter appRouter;
+  final bool enableSessionExpirationChecker;
 
   const WeatherApp({
     required this.appRouter,
+    this.enableSessionExpirationChecker = true,
     super.key,
   });
 
@@ -51,6 +55,13 @@ class WeatherApp extends StatelessWidget {
               Locale(defaultLanguageCode),
               Locale(polishLanguageCode),
             ],
+            builder: (BuildContext context, Widget? child) => enableSessionExpirationChecker
+                ? SessionExpirationChecker(
+                    child: child!,
+                    onAuthenticated: (_) => appRouter.goNamed(WeatherAppRoutes.home.name),
+                    onUnauthenticated: (_) => appRouter.goNamed(WeatherAppRoutes.splash.name),
+                  )
+                : child!,
           ),
         ),
       ),

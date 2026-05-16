@@ -1,3 +1,4 @@
+import 'package:fimber_io/fimber_io.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/data/location/data_source/location_data_source.dart';
@@ -24,7 +25,8 @@ class LocationServiceImpl implements LocationService {
       } else {
         return Success<GenericError, LocationPermissionStatus>(dto.toDomain());
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Check location permission error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, LocationPermissionStatus>(
         PlatformError(message: 'An unexpected error occurred'),
       );
@@ -37,7 +39,8 @@ class LocationServiceImpl implements LocationService {
       final Position dto = await _locationDataSource.getCurrentLocation();
 
       return Success<GenericError, CurrentLocation>(dto.toDomain());
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Get current location error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, CurrentLocation>(PlatformError(message: 'An unexpected error occurred'));
     }
   }
@@ -52,7 +55,8 @@ class LocationServiceImpl implements LocationService {
       } else {
         return Success<GenericError, LocationPermissionStatus>(dto.toDomain());
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Request location permission error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, LocationPermissionStatus>(
         PlatformError(message: 'An unexpected error occurred'),
       );
@@ -69,7 +73,8 @@ class LocationServiceImpl implements LocationService {
       } else {
         return const Failure<GenericError, bool>(LocationServiceDisabledError());
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Is location service enabled error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, bool>(PlatformError(message: 'An unexpected error occurred'));
     }
   }

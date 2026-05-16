@@ -14,7 +14,6 @@ import 'package:weather_app/presentation/widgets/buttons/weather_app_text_button
 import 'package:weather_app/style/app_typography.dart';
 import 'package:weather_app/style/constants.dart';
 import 'package:weather_app/style/dimens.dart';
-import 'package:weather_app/utils/hooks_use_once.dart';
 
 class SplashPage extends HookWidget {
   const SplashPage({super.key});
@@ -27,8 +26,6 @@ class SplashPage extends HookWidget {
       cubit.presentation,
       onData: (SplashPresentationEvent event) => _listener(event, context),
     );
-
-    useOnce(cubit.init);
 
     return Scaffold(
       body: Container(
@@ -74,7 +71,6 @@ class SplashPage extends HookWidget {
   }
 
   void _listener(SplashPresentationEvent event, BuildContext context) => switch (event) {
-    SplashNavigateToHomeEvent() => context.goNamed(WeatherAppRoutes.home.name),
     SplashNavigateToLoginEvent() => context.pushNamed(WeatherAppRoutes.login.name),
     SplashNavigateToRegisterEvent() => context.pushNamed(WeatherAppRoutes.register.name),
   };

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fimber_io/fimber_io.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/data/weather/data_source/weather_api_data_source.dart';
 import 'package:weather_app/data/weather/model/weather_dto.dart';
@@ -26,11 +27,12 @@ class WeatherServiceImpl implements WeatherService {
       final WeatherDto dto = await _weatherApiDataSource.getWeatherByCords(latitude, longitude, languageCode);
 
       return Success<GenericError, CurrentWeather>(dto.toDomain());
-    } on DioException catch (e) {
+    } on DioException catch (e, st) {
       final HttpError error = e.handleException;
-
+      Fimber.e('Get current weather error', ex: e, stacktrace: st);
       return Failure<GenericError, CurrentWeather>(error);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Get current weather error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, CurrentWeather>(UnexpectedError(message: 'An unexpected error occurred'));
     }
   }
@@ -44,11 +46,12 @@ class WeatherServiceImpl implements WeatherService {
       final WeatherDto dto = await _weatherApiDataSource.getWeatherByCity(city, languageCode);
 
       return Success<GenericError, CurrentWeather>(dto.toDomain());
-    } on DioException catch (e) {
+    } on DioException catch (e, st) {
       final HttpError error = e.handleException;
-
+      Fimber.e('Get current weather by city error', ex: e, stacktrace: st);
       return Failure<GenericError, CurrentWeather>(error);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      Fimber.e('Get current weather by city error', ex: error, stacktrace: stackTrace);
       return const Failure<GenericError, CurrentWeather>(UnexpectedError(message: 'An unexpected error occurred'));
     }
   }

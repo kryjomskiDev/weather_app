@@ -42,6 +42,11 @@ extension Bootstrap on WidgetTester {
       }
     }
 
-    await pumpWidget(WeatherApp(appRouter: appRouter ?? router));
+    await pumpWidget(
+      WeatherApp(
+        appRouter: appRouter ?? router,
+        enableSessionExpirationChecker: false,
+      ),
+    );
   }
 }

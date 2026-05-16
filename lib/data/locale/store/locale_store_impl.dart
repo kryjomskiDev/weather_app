@@ -1,3 +1,4 @@
+import 'package:fimber_io/fimber_io.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/domain/locale/store/locale_store.dart';
@@ -18,6 +19,7 @@ class LocaleStoreImpl implements LocaleStore {
       final String? selectedLanguageCode = sharedPreferences.getString(SharedPreferencesKeys.selectedLangaugeCode);
       return Either.success(selectedLanguageCode);
     } catch (e) {
+      Fimber.e('Get selected language code error', ex: e, stacktrace: StackTrace.current);
       return Either.failure(const UnexpectedError(message: 'An unexpected error occurred'));
     }
   }
@@ -28,6 +30,7 @@ class LocaleStoreImpl implements LocaleStore {
       await sharedPreferences.setString(SharedPreferencesKeys.selectedLangaugeCode, languageCode);
       return Either.success(null);
     } catch (e) {
+      Fimber.e('Save language code error', ex: e, stacktrace: StackTrace.current);
       return Either.failure(const UnexpectedError(message: 'An unexpected error occurred'));
     }
   }

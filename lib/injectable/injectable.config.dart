@@ -51,13 +51,12 @@ import '../domain/weather/use_case/get_current_weather_by_city_use_case.dart'
 import '../domain/weather/use_case/get_current_weather_use_case.dart' as _i464;
 import '../presentation/pages/home/cubit/home_cubit.dart' as _i852;
 import '../presentation/pages/login/cubit/login_cubit.dart' as _i139;
-import '../presentation/pages/main/cubit/main_session_cubit.dart' as _i719;
-import '../presentation/pages/main/cubit/main_shell_session_cubit.dart'
-    as _i955;
 import '../presentation/pages/register/cubit/register_cubit.dart' as _i904;
 import '../presentation/pages/search/cubit/search_cubit.dart' as _i799;
 import '../presentation/pages/settings/cubit/settings_cubit.dart' as _i427;
 import '../presentation/pages/splash/cubit/splash_cubit.dart' as _i386;
+import '../presentation/widgets/session_expiration_checker/cubit/session_expiration_checker_cubit.dart'
+    as _i948;
 import 'dio_injectable/dio_injectable.dart' as _i984;
 import 'envs_module.dart' as _i253;
 import 'injectable_firebase_auth_module.dart' as _i284;
@@ -83,6 +82,7 @@ Future<_i174.GetIt> $initGetIt(
     () => sharedPreferencesModule.sharedPreferences,
     preResolve: true,
   );
+  gh.factory<_i386.SplashCubit>(() => _i386.SplashCubit());
   gh.singleton<_i479.LocationDataSource>(() => _i479.LocationDataSource());
   gh.lazySingleton<_i59.FirebaseAuth>(
     () => injectableFirebaseAuthModule.firebaseAuth,
@@ -165,9 +165,6 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i904.RegisterCubit>(
     () => _i904.RegisterCubit(gh<_i239.RegisterWithEmailAndPasswordUseCase>()),
   );
-  gh.factory<_i386.SplashCubit>(
-    () => _i386.SplashCubit(gh<_i80.GetCurrentAuthUserUseCase>()),
-  );
   gh.factory<_i799.SearchCubit>(
     () => _i799.SearchCubit(
       gh<_i674.GetCurrentWeatherByCityUseCase>(),
@@ -184,11 +181,8 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i139.LoginCubit>(
     () => _i139.LoginCubit(gh<_i56.SignInWithEmailAndPasswordUseCase>()),
   );
-  gh.factory<_i719.MainSessionCubit>(
-    () => _i719.MainSessionCubit(gh<_i924.SubscribeToAuthUserChangesUseCase>()),
-  );
-  gh.factory<_i955.MainShellSessionCubit>(
-    () => _i955.MainShellSessionCubit(
+  gh.factory<_i948.SessionExpirationCheckerCubit>(
+    () => _i948.SessionExpirationCheckerCubit(
       gh<_i924.SubscribeToAuthUserChangesUseCase>(),
     ),
   );
