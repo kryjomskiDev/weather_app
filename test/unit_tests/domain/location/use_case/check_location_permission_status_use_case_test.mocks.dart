@@ -6,11 +6,14 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:weather_app/domain/location/model/current_location.dart' as _i2;
+import 'package:weather_app/domain/location/model/current_location.dart' as _i7;
 import 'package:weather_app/domain/location/model/location_permission_status.dart'
-    as _i5;
+    as _i6;
 import 'package:weather_app/domain/location/service/location_service.dart'
     as _i3;
+import 'package:weather_app/utils/error_handling/either.dart' as _i2;
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart'
+    as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,9 +30,8 @@ import 'package:weather_app/domain/location/service/location_service.dart'
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
-class _FakeCurrentLocation_0 extends _i1.SmartFake
-    implements _i2.CurrentLocation {
-  _FakeCurrentLocation_0(Object parent, Invocation parentInvocation)
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -42,43 +44,70 @@ class MockLocationService extends _i1.Mock implements _i3.LocationService {
   }
 
   @override
-  _i4.Future<bool> isLocationServiceEnabled() =>
+  _i4.Future<_i2.Either<_i5.GenericError, bool>> isLocationServiceEnabled() =>
       (super.noSuchMethod(
             Invocation.method(#isLocationServiceEnabled, []),
-            returnValue: _i4.Future<bool>.value(false),
-          )
-          as _i4.Future<bool>);
-
-  @override
-  _i4.Future<_i5.LocationPermissionStatus> checkLocationPermission() =>
-      (super.noSuchMethod(
-            Invocation.method(#checkLocationPermission, []),
-            returnValue: _i4.Future<_i5.LocationPermissionStatus>.value(
-              _i5.LocationPermissionStatus.denied,
-            ),
-          )
-          as _i4.Future<_i5.LocationPermissionStatus>);
-
-  @override
-  _i4.Future<_i5.LocationPermissionStatus> requestLocationPermission() =>
-      (super.noSuchMethod(
-            Invocation.method(#requestLocationPermission, []),
-            returnValue: _i4.Future<_i5.LocationPermissionStatus>.value(
-              _i5.LocationPermissionStatus.denied,
-            ),
-          )
-          as _i4.Future<_i5.LocationPermissionStatus>);
-
-  @override
-  _i4.Future<_i2.CurrentLocation> getCurrentLocation() =>
-      (super.noSuchMethod(
-            Invocation.method(#getCurrentLocation, []),
-            returnValue: _i4.Future<_i2.CurrentLocation>.value(
-              _FakeCurrentLocation_0(
+            returnValue: _i4.Future<_i2.Either<_i5.GenericError, bool>>.value(
+              _FakeEither_0<_i5.GenericError, bool>(
                 this,
-                Invocation.method(#getCurrentLocation, []),
+                Invocation.method(#isLocationServiceEnabled, []),
               ),
             ),
           )
-          as _i4.Future<_i2.CurrentLocation>);
+          as _i4.Future<_i2.Either<_i5.GenericError, bool>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>>
+  checkLocationPermission() =>
+      (super.noSuchMethod(
+            Invocation.method(#checkLocationPermission, []),
+            returnValue:
+                _i4.Future<
+                  _i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>
+                >.value(
+                  _FakeEither_0<_i5.GenericError, _i6.LocationPermissionStatus>(
+                    this,
+                    Invocation.method(#checkLocationPermission, []),
+                  ),
+                ),
+          )
+          as _i4.Future<
+            _i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>
+          >);
+
+  @override
+  _i4.Future<_i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>>
+  requestLocationPermission() =>
+      (super.noSuchMethod(
+            Invocation.method(#requestLocationPermission, []),
+            returnValue:
+                _i4.Future<
+                  _i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>
+                >.value(
+                  _FakeEither_0<_i5.GenericError, _i6.LocationPermissionStatus>(
+                    this,
+                    Invocation.method(#requestLocationPermission, []),
+                  ),
+                ),
+          )
+          as _i4.Future<
+            _i2.Either<_i5.GenericError, _i6.LocationPermissionStatus>
+          >);
+
+  @override
+  _i4.Future<_i2.Either<_i5.GenericError, _i7.CurrentLocation>>
+  getCurrentLocation() =>
+      (super.noSuchMethod(
+            Invocation.method(#getCurrentLocation, []),
+            returnValue:
+                _i4.Future<
+                  _i2.Either<_i5.GenericError, _i7.CurrentLocation>
+                >.value(
+                  _FakeEither_0<_i5.GenericError, _i7.CurrentLocation>(
+                    this,
+                    Invocation.method(#getCurrentLocation, []),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.GenericError, _i7.CurrentLocation>>);
 }

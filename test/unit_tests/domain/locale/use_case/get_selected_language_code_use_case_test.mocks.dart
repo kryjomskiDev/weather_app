@@ -3,10 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:weather_app/domain/locale/store/locale_store.dart' as _i2;
+import 'package:weather_app/domain/locale/store/locale_store.dart' as _i3;
+import 'package:weather_app/utils/error_handling/either.dart' as _i2;
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart'
+    as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,20 +26,42 @@ import 'package:weather_app/domain/locale/store/locale_store.dart' as _i2;
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [LocaleStore].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocaleStore extends _i1.Mock implements _i2.LocaleStore {
+class MockLocaleStore extends _i1.Mock implements _i3.LocaleStore {
   MockLocaleStore() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> saveLanguageCode(String? languageCode) =>
+  _i2.Either<_i4.GenericError, String?> getSelectedLanguageCode() =>
+      (super.noSuchMethod(
+            Invocation.method(#getSelectedLanguageCode, []),
+            returnValue: _FakeEither_0<_i4.GenericError, String?>(
+              this,
+              Invocation.method(#getSelectedLanguageCode, []),
+            ),
+          )
+          as _i2.Either<_i4.GenericError, String?>);
+
+  @override
+  _i5.Future<_i2.Either<_i4.GenericError, void>> saveLanguageCode(
+    String? languageCode,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#saveLanguageCode, [languageCode]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<_i2.Either<_i4.GenericError, void>>.value(
+              _FakeEither_0<_i4.GenericError, void>(
+                this,
+                Invocation.method(#saveLanguageCode, [languageCode]),
+              ),
+            ),
           )
-          as _i3.Future<void>);
+          as _i5.Future<_i2.Either<_i4.GenericError, void>>);
 }

@@ -8,10 +8,12 @@ import 'package:weather_app/data/weather/model/weather_temp_info_dto.dart';
 import 'package:weather_app/data/weather/service/weather_service_impl.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';
 import 'package:weather_app/domain/weather/service/weather_service.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
 
 import 'weather_service_impl_test.mocks.dart';
 
-@GenerateMocks([WeatherApiDataSource])
+@GenerateMocks(<Type>[WeatherApiDataSource])
 void main() {
   late WeatherApiDataSource weatherApiDataSource;
   late WeatherService weatherService;
@@ -28,13 +30,13 @@ void main() {
 
     group('getCurrentWeather method', () {
       test('returns CurrentWeather successfully', () async {
-        const dto = WeatherDto(
+        const WeatherDto dto = WeatherDto(
           'London',
-          [WeatherDetailsDto('Clear', 'clear sky', '01d')],
+          <WeatherDetailsDto>[WeatherDetailsDto('Clear', 'clear sky', '01d')],
           WeatherTempInfoDto(26.1),
         );
 
-        const expectedAnswer = CurrentWeather(
+        const CurrentWeather expectedAnswer = CurrentWeather(
           locationName: 'London',
           description: 'clear sky',
           icon: '01d',
@@ -42,47 +44,55 @@ void main() {
           title: 'Clear',
         );
 
-        when(weatherApiDataSource.getWeatherByCords(
-          latitude,
-          longitude,
-          languageCode,
-        )).thenAnswer((_) async => dto);
+        when(
+          weatherApiDataSource.getWeatherByCords(
+            latitude,
+            longitude,
+            languageCode,
+          ),
+        ).thenAnswer((_) async => dto);
 
-        final result = await weatherService.getCurrentWeather(
+        final Either<GenericError, CurrentWeather> result = await weatherService.getCurrentWeather(
           latitude: latitude,
           longitude: longitude,
           languageCode: languageCode,
         );
 
-        expect(result, equals(expectedAnswer));
-        verify(weatherApiDataSource.getWeatherByCords(
-          latitude,
-          longitude,
-          languageCode,
-        )).called(1);
+        expect(result.isSuccess(), isTrue);
+        expect(result.getOrElse(expectedAnswer), equals(expectedAnswer));
+        verify(
+          weatherApiDataSource.getWeatherByCords(
+            latitude,
+            longitude,
+            languageCode,
+          ),
+        ).called(1);
       });
 
-      test('throws Exception when data source fails', () async {
-        when(weatherApiDataSource.getWeatherByCords(
-          latitude,
-          longitude,
-          languageCode,
-        )).thenThrow(Exception());
-
-        expect(
-          () => weatherService.getCurrentWeather(
-            latitude: latitude,
-            longitude: longitude,
-            languageCode: languageCode,
+      test('returns Failure when data source fails', () async {
+        when(
+          weatherApiDataSource.getWeatherByCords(
+            latitude,
+            longitude,
+            languageCode,
           ),
-          throwsA(isA<Exception>()),
+        ).thenThrow(Exception());
+
+        final Either<GenericError, CurrentWeather> result = await weatherService.getCurrentWeather(
+          latitude: latitude,
+          longitude: longitude,
+          languageCode: languageCode,
         );
 
-        verify(weatherApiDataSource.getWeatherByCords(
-          latitude,
-          longitude,
-          languageCode,
-        )).called(1);
+        expect(result.isFailure(), isTrue);
+
+        verify(
+          weatherApiDataSource.getWeatherByCords(
+            latitude,
+            longitude,
+            languageCode,
+          ),
+        ).called(1);
       });
     });
   });

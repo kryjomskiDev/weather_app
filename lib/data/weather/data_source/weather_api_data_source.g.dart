@@ -24,7 +24,7 @@ class _WeatherApiDataSource implements WeatherApiDataSource {
     double latitude,
     double longitude,
     String lang, [
-    String units = query.metric,
+    String units = WeatherAppQuery.metric,
   ]) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

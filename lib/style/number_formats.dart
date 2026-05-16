@@ -1,3 +1,7 @@
 import 'package:intl/intl.dart';
 
-final temperature = NumberFormat('##.#');
+class WeatherAppNumberFormats {
+  const WeatherAppNumberFormats._();
+
+  static NumberFormat get temperature => NumberFormat('##.#');
+}

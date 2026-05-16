@@ -1,0 +1,87 @@
+---
+description: State management patterns with Cubit/Bloc and presentation events
+alwaysApply: true
+---
+
+
+## Cubit vs Bloc
+
+- **Prefer** `Cubit` in most cases
+- **Use** `Bloc` only when stream transformations are needed
+- **Must** extend `DorCubit<State>` or `DorBloc<Event, State>` (not base Cubit/Bloc)
+
+## Cubit Access in Widgets
+
+- **Must** use `useBloc<MyCubit>()` hook to resolve cubits from GetIt — **not** `BlocProvider(create: ...)`
+- **Must** use `BlocProvider.value` only when passing an existing cubit from parent to child widget (e.g. form cubits to form widgets)
+- **Must** use `MultiBlocProvider` at app root for global singletons only
+
+```dart
+// ✅ Good — standard page pattern
+class MyPage extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final MyCubit cubit = useBloc<MyCubit>();
+    // ...
+  }
+}
+
+// ✅ Good — passing form cubit to child widget
+BlocProvider<MyFormCubit>.value(
+  value: formCubit,
+  child: MyFormWidget(),
+)
+```
+
+## Form Cubit Separation
+
+- **Must** separate form logic into dedicated files alongside the main cubit:
+  - `my_page_cubit.dart` + `my_page_state.dart` — page logic (loading, API calls, navigation)
+  - `my_page_form_cubit.dart` + `my_page_form_state.dart` — form values and validation only
+- **Must not** mix form validation logic into the main page cubit
+
+## State Patterns
+
+### Pattern 1: Sealed class with subclasses
+For simple cases with clear state separation (single widget, simple pages).
+
+### Pattern 2: Single class with nullable properties
+For states with different properties populated at different times. Must include `copyWith`.
+
+### Pattern 3: Class with status enum + nullable properties
+Combines explicit states with property flexibility. Must include `copyWith`.
+
+All patterns **must** extend `Equatable` and override `props`.
+
+## UseCases
+
+- **Must** be `@injectable`, implement `call()`, return `Either<ErrorType, SuccessType>`
+
+
+## Presentation Events
+
+- **Must** use `bloc_presentation` package for one-shot UI actions (snackbar, dialog, navigation)
+- **Must** define events as `sealed class` in a separate `*_presentation_event.dart` file
+- **Must** extend cubit with `BlocPresentationMixin<State, PresentationEvent>`
+- **Must** use `emitPresentation()` to emit, `useOnStreamChange()` to listen
+- **Must not** use `useBlocListener` for presentation events
+- **Must not** put UI actions (navigation, snackbars) in state classes
+
+### Listener pattern
+
+```dart
+void _listener(PresentationEvent event, BuildContext context) => switch (event) {
+  SuccessEvent() => context.goToNextPage(),
+  ErrorEvent(:final message) => context.showErrorSnackBar(message: message),
+  MultiActionEvent() => () {
+    context.showSnackBar(message: 'Done');
+    context.goToNextPage();
+  }(),
+};
+```
+
+### State vs Presentation Event
+
+- Error + user stays on page → `emitPresentation(error)` + `emit(previousState)`
+- Success + navigate away → `emitPresentation(success)` only
+- Success + stay on page → `emitPresentation(success)` + `emit(newState)`

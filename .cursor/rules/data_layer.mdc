@@ -1,0 +1,166 @@
+---
+description: Data layer patterns for DTOs, mappers, error handling, and serialization
+alwaysApply: true
+---
+
+# Data Layer
+
+> For detailed examples, see [README.md - Mappers](../../README.md#mappers) and [README.md - Error Handling](../../README.md#error-handling).
+
+## Service Layer
+
+- **Must** use services (not repositories) as the abstraction layer
+- **Must** define an abstract interface in `domain/service/` (e.g. `abstract interface class OrdersService`)
+- **Must** implement in `data/service/` (e.g. `OrdersServiceImpl`)
+- **Must** register with `@LazySingleton(as: OrdersService)` or `@Singleton(as: OrdersService)`
+- Older modules use `abstract class`; new modules **should** use `abstract interface class`
+
+## DataSource Layer (Retrofit)
+
+- **Must** use Retrofit `@RestApi()` abstract classes for API calls in `data/data_source/`
+- **Must** use `factory Xxx(Dio dio)` constructor
+- ServiceImpl calls data source, maps DTOs → domain models, handles errors with Either
+
+```dart
+@RestApi()
+abstract class OrdersDataSource {
+  factory OrdersDataSource(Dio dio) = _OrdersDataSource;
+
+  @GET('/orders')
+  Future<OrdersResponseDto> getOrders();
+}
+```
+
+## Mappers
+
+- **Must** use extensions on DTO classes (e.g. `extension UserDtoMapper on UserDto`)
+- **Should** name method `toDomain()`
+- **Must** handle all field mappings and transformations
+
+## DTOs & JSON Serialization
+
+- **Must** use `@JsonSerializable(createToJson: false)` for read-only DTOs
+- **Must not** use `@JsonKey` when JSON key matches field name
+- **Must** use `@JsonKey(name: ...)` only when names differ (e.g. snake_case → camelCase)
+
+```dart
+@JsonSerializable(createToJson: false)
+class UserDto {
+  @JsonKey(name: 'user_id')
+  final int userId;
+  final String userName;
+}
+```
+
+## Polymorphic DTOs
+
+When a JSON `type` (or similar discriminator) field determines which DTO subclass to instantiate:
+
+- **Must** handle unknown `type` values gracefully — return an unknown/null sentinel, **never** throw
+- **Must** filter out unknown items during `toDomain()` mapping — return nullable, filter with `whereType`
+- **Must** use `is` pattern matching (not `runtimeType`) for type dispatch in mapper extensions
+- **Must** name DTO and domain model classes to match API terminology (e.g. if API sends `"type": "text"`, use `TextOptionDto`, not `OtherOptionDto`)
+
+```dart
+// ✅ Good — unknown types handled gracefully, is-pattern dispatch
+abstract class ItemDto {
+  const ItemDto();
+
+  factory ItemDto.fromJson(Map<String, dynamic> json) {
+    return switch (json['type'] as String?) {
+      'typeA' => TypeAItemDto.fromJson(json),
+      'typeB' => TypeBItemDto.fromJson(json),
+      _ => const _UnknownItemDto(),
+    };
+  }
+}
+
+class _UnknownItemDto extends ItemDto {
+  const _UnknownItemDto();
+}
+
+extension ItemDtoMapper on ItemDto {
+  DomainModel? toDomain() => switch (this) {
+    final TypeAItemDto dto => dto.toDomain(),
+    final TypeBItemDto dto => dto.toDomain(),
+    _ => null,
+  };
+}
+
+// List mapper filters out unknowns
+extension ItemListDtoMapper on ItemListDto {
+  List<DomainModel> toDomain() => items
+      .map((ItemDto item) => item.toDomain())
+      .whereType<DomainModel>()
+      .toList(growable: false);
+}
+```
+
+```dart
+// ❌ Bad — throws on unknown type, uses runtimeType
+factory ItemDto.fromJson(Map<String, dynamic> json) {
+  return switch (json['type'] as String?) {
+    'typeA' => TypeAItemDto.fromJson(json),
+    _ => throw UnsupportedError('Unknown type'),
+  };
+}
+
+extension ItemDtoMapper on ItemDto {
+  DomainModel toDomain() => switch (runtimeType) {
+    const (TypeAItemDto) => (this as TypeAItemDto).toDomain(),
+    _ => throw UnsupportedError('Unknown'),
+  };
+}
+```
+
+## API Enums
+
+- **Must** use enums with `apiCode` field and `fromCode(String? code)` static parser
+- Parser must: handle null/empty → default, normalize input, use `firstWhere` with `orElse`
+- Domain and UI use the enum, not raw strings
+
+```dart
+enum OrderDetailsPaymentMethod {
+  verifoneHosted('verifone_hosted'),
+  paypalExpress('paypal_express'),
+  unknown('unknown');
+
+  const OrderDetailsPaymentMethod(this.apiCode);
+  final String apiCode;
+
+  static OrderDetailsPaymentMethod fromCode(String? code) {
+    if (code == null || code.isEmpty) return OrderDetailsPaymentMethod.unknown;
+    final String normalized = code.trim().toLowerCase();
+    return OrderDetailsPaymentMethod.values.firstWhere(
+      (OrderDetailsPaymentMethod method) => method.apiCode == normalized,
+      orElse: () => OrderDetailsPaymentMethod.unknown,
+    );
+  }
+}
+```
+
+## Error Handling
+
+### Either Pattern
+- **Must** return `Either<ErrorType, SuccessType>` from service methods
+- `Success<L, R>` for success, `Failure<L, R>` for failure
+- Use `.fold()` in presentation layer to handle both cases
+
+Key methods: `fold()`, `map()`, `flatMap()`, `getOrElse()`, `isSuccess()`, `isFailure()`
+
+### Data Layer
+- **Must** catch only expected exceptions
+- Let unexpected exceptions bubble up automatically
+
+```dart
+try {
+  return Success<ErrorType, DataType>(data);
+} on ExpectedException catch (e, st) {
+  return Failure<ErrorType, DataType>(SpecificError(message: e.message));
+}
+```
+
+### Error Types
+- **Must** inherit from `GenericError`
+- **Should** use sealed classes for error hierarchies
+

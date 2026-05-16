@@ -22,10 +22,10 @@ class WeatherDto {
 
 extension WeatherDtoMapper on WeatherDto {
   CurrentWeather toDomain() => CurrentWeather(
-        locationName: name,
-        description: weather.first.description,
-        icon: weather.first.icon,
-        temperature: main.temp,
-        title: weather.first.main,
-      );
+    locationName: name,
+    description: weather.first.description,
+    icon: weather.first.icon,
+    temperature: main.temp,
+    title: weather.first.main,
+  );
 }

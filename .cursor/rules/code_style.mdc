@@ -1,0 +1,91 @@
+---
+description: Code style and formatting rules for Flutter/Dart development
+alwaysApply: true
+---
+
+# Code Style
+
+## Flutter/Dart
+
+- Follow Dart style guide conventions
+- 2 spaces for indentation (not tabs)
+- Prefer single quotes unless the string contains single quotes
+- Trailing commas in multi-line collections and function calls
+- Use `const` constructors when possible
+
+## Line Breaking
+
+- Break long lines at logical points (operators, commas)
+- Each parameter on its own line when breaking function/constructor calls
+- Align continuation lines with opening parenthesis
+- Break long switch expressions: each case on its own line
+
+## File Organization
+
+- Import order: `dart:` → `package:` → relative imports
+- Blank lines between import groups
+- Alphabetical within each group
+
+## Naming Conventions
+
+- `camelCase` — variables, functions, methods
+- `PascalCase` — classes, enums, typedefs
+- `snake_case` — file names
+- `SCREAMING_SNAKE_CASE` — constants
+
+## Variable Naming
+
+- **Must** use descriptive names — not `e`, `i`, `x` (except simple loop counters)
+
+```dart
+// ❌ Bad
+items.map((e) => e.toDomain())
+
+// ✅ Good
+items.map((item) => item.toDomain())
+```
+
+## Type Dispatch
+
+- **Must** use `is` pattern matching for type dispatch — never `runtimeType` comparison
+- **Must** use `final` for all local variables that are not reassigned
+
+```dart
+// ✅ Good
+switch (this) {
+  final FooDto dto => dto.toDomain(),
+  final BarDto dto => dto.toDomain(),
+  _ => null,
+};
+
+// ❌ Bad
+switch (runtimeType) {
+  const (FooDto) => (this as FooDto).toDomain(),
+  const (BarDto) => (this as BarDto).toDomain(),
+  _ => throw UnsupportedError('...'),
+};
+```
+
+## Documentation
+
+- `///` for public API dartdoc comments
+- Include examples for complex functions
+
+## Formatting
+
+- **Must** use `dart format` with a line length of **120** characters (configured in `analysis_options.yaml` as `page_width: 120`)
+- **Must not** manually wrap lines shorter than 120 characters unless it improves readability
+- **Must** end every file with exactly one newline character — include on creation, don't fix later
+
+## Security
+
+- Never commit API keys or sensitive data
+- Use environment variables for configuration
+- Validate all user inputs
+- Use secure storage for sensitive data
+
+## Git
+
+- Clear, descriptive commit messages (conventional commit format)
+- Focused, atomic commits
+- Use `.github/pull_request_template.md` for PR descriptions (don't create the file, put content in chat)

@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:weather_app/injectable/dio_injectable/dio_injectable.dart';
 import 'package:weather_app/injectable/injectable.config.dart';
 
-final getIt = GetIt.instance;
+final GetIt getIt = GetIt.instance;
 
 @InjectableInit(
   initializerName: r'$initGetIt', // default

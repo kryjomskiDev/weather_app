@@ -1,0 +1,30 @@
+---
+description: Dependency injection patterns with Injectable and GetIt
+alwaysApply: true
+---
+
+# Dependency Injection
+
+## Annotations
+
+- `@injectable` — services, use cases, cubits
+- `@singleton` — single-instance classes
+- `@module` — external dependency modules
+- **Must** regenerate after changes: `flutter pub run build_runner build --delete-conflicting-outputs`
+
+
+## External Singletons
+
+```dart
+@module
+abstract class FirebaseAuthModule {
+  @singleton
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+}
+```
+
+## Generated Files
+
+- **Must not** manually edit `*.g.dart`, `*.mocks.dart`, `*.gen.dart`, `dependency_injection.module.dart`
+- Fix issues in source files, then regenerate
+- Use `flutter pub run build_runner clean` if regeneration doesn't pick up changes

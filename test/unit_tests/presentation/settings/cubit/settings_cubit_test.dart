@@ -1,133 +1,163 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:weather_app/domain/auth/use_case/sign_out_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/get_selected_language_code_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/save_language_code_use_case.dart';
-import 'package:weather_app/domain/location/model/location_permission_status.dart';
-import 'package:weather_app/domain/location/use_case/check_location_permission_status_use_case.dart';
 import 'package:weather_app/presentation/pages/settings/cubit/settings_cubit.dart';
+import 'package:weather_app/presentation/pages/settings/cubit/settings_presentation_event.dart';
 import 'package:weather_app/presentation/pages/settings/cubit/settings_state.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/other_errors.dart';
 
 import 'settings_cubit_test.mocks.dart';
 
-@GenerateMocks([
+@GenerateMocks(<Type>[
   GetSelectedLanguageCodeUseCase,
   SaveLanguageCodeUseCase,
-  CheckLocationPermissionStatusUseCase,
+  SignOutUseCase,
 ])
 void main() {
-  late GetSelectedLanguageCodeUseCase getSelectedLanguageCodeUseCase;
-  late SaveLanguageCodeUseCase saveLanguageCodeUseCase;
-  late CheckLocationPermissionStatusUseCase checkLocationPermissionStatusUseCase;
-  late SettingsCubit settingsCubit;
+  late MockSignOutUseCase signOutUseCase;
+  late MockGetSelectedLanguageCodeUseCase getSelectedLanguageCodeUseCase;
+  late MockSaveLanguageCodeUseCase saveLanguageCodeUseCase;
 
   setUp(() {
+    signOutUseCase = MockSignOutUseCase();
     getSelectedLanguageCodeUseCase = MockGetSelectedLanguageCodeUseCase();
     saveLanguageCodeUseCase = MockSaveLanguageCodeUseCase();
-    checkLocationPermissionStatusUseCase = MockCheckLocationPermissionStatusUseCase();
-
-    settingsCubit = SettingsCubit(
-      getSelectedLanguageCodeUseCase,
-      saveLanguageCodeUseCase,
-      checkLocationPermissionStatusUseCase,
-    );
   });
 
+  SettingsCubit buildCubit() => SettingsCubit(
+    signOutUseCase,
+    getSelectedLanguageCodeUseCase,
+    saveLanguageCodeUseCase,
+  );
+
   group('SettingsCubit', () {
-    test(
-      'has initial idle state',
-      () => expect(settingsCubit.state, const SettingsState.idle()),
-    );
+    test('has initial loading state', () => expect(buildCubit().state, const SettingsStateLoading()));
 
     group('init method', () {
-      const selectedLanguage = 'en';
+      const String selectedLanguage = 'en';
+
       blocTest(
         'emits [loading, loaded] states successfully',
         setUp: () {
           when(getSelectedLanguageCodeUseCase()).thenReturn(selectedLanguage);
-          when(checkLocationPermissionStatusUseCase()).thenAnswer((_) async => LocationPermissionStatus.always);
         },
-        build: () => settingsCubit,
-        act: (cubit) => cubit.init(),
-        expect: () => [
-          const SettingsState.loading(),
-          const SettingsState.loaded(
-            selectedLanguageCode: selectedLanguage,
-            locationPermissionStatus: LocationPermissionStatus.always,
-          ),
-        ],
-      );
-
-      blocTest(
-        'emits [loading, error] when an exception occurs',
-        setUp: () {
-          when(getSelectedLanguageCodeUseCase()).thenThrow(Exception('Some error'));
-        },
-        build: () => settingsCubit,
-        act: (cubit) => cubit.init(),
-        expect: () => [
-          const SettingsState.loading(),
-          const SettingsState.error(),
+        build: buildCubit,
+        act: (SettingsCubit cubit) => cubit.init(),
+        expect: () => <SettingsState>[
+          const SettingsStateLoading(),
+          const SettingsStateLoaded(selectedLanguageCode: selectedLanguage),
         ],
       );
     });
 
     group('selectLanguage method', () {
-      const newSelectedLanguage = 'pl';
+      const String newSelectedLanguage = 'pl';
+
       blocTest(
-        'emits [loading, languageSelected] states successfully',
+        'emits [loaded, loading] then presentation on success until onLanguageSelected',
         setUp: () {
+          when(getSelectedLanguageCodeUseCase()).thenReturn('en');
           when(saveLanguageCodeUseCase(newSelectedLanguage)).thenAnswer(
-            (_) => Future.value(),
+            (_) async => Either.success<void>(null),
           );
         },
-        build: () => settingsCubit,
-        act: (cubit) => cubit.selectLanguage(newSelectedLanguage),
-        expect: () => [
-          const SettingsState.loading(),
-          const SettingsState.languageSelected(),
+        build: buildCubit,
+        act: (SettingsCubit cubit) async {
+          await cubit.init();
+          await cubit.selectLanguage(newSelectedLanguage);
+        },
+        expect: () => <SettingsState>[
+          const SettingsStateLoading(),
+          const SettingsStateLoaded(selectedLanguageCode: 'en'),
+          const SettingsStateLoading(),
         ],
       );
 
       blocTest(
-        'emits [loading, error] when an exception occurs',
+        'emits [loading, error] when save fails',
         setUp: () {
-          when(saveLanguageCodeUseCase(newSelectedLanguage)).thenThrow(Exception('Some error'));
+          when(saveLanguageCodeUseCase(newSelectedLanguage)).thenAnswer(
+            (_) async => Either.failure<void>(
+              const UnexpectedError(message: 'Some error'),
+            ),
+          );
         },
-        build: () => settingsCubit,
-        act: (cubit) => cubit.selectLanguage(newSelectedLanguage),
-        expect: () => [
-          const SettingsState.loading(),
-          const SettingsState.error(),
+        build: buildCubit,
+        act: (SettingsCubit cubit) => cubit.selectLanguage(newSelectedLanguage),
+        expect: () => <SettingsState>[
+          const SettingsStateLoading(),
+          const SettingsStateError(),
         ],
       );
     });
 
     group('onLanguageSelected method', () {
-      const selectedLanguage = 'en';
-      const newLanguage = 'pl';
-      const locationPermissionStatus = LocationPermissionStatus.always;
-
       blocTest(
-        'emits [loaded] state with current values',
-        build: () => settingsCubit,
-        setUp: () async {
-          when(getSelectedLanguageCodeUseCase()).thenReturn(selectedLanguage);
-          when(checkLocationPermissionStatusUseCase()).thenAnswer((_) async => locationPermissionStatus);
-          when(saveLanguageCodeUseCase(newLanguage)).thenAnswer((_) => Future.value());
-
-          await settingsCubit.init();
-          await settingsCubit.selectLanguage(newLanguage);
+        'emits [loaded] with saved language after selectLanguage success',
+        setUp: () {
+          when(getSelectedLanguageCodeUseCase()).thenReturn('en');
+          when(saveLanguageCodeUseCase('pl')).thenAnswer(
+            (_) async => Either.success<void>(null),
+          );
         },
-        act: (cubit) => cubit.onLanguageSelected(),
-        expect: () => [
-          const SettingsState.loaded(
-            selectedLanguageCode: newLanguage,
-            locationPermissionStatus: locationPermissionStatus,
-          ),
+        build: buildCubit,
+        act: (SettingsCubit cubit) async {
+          await cubit.init();
+          await cubit.selectLanguage('pl');
+          cubit.onLanguageSelected();
+        },
+        expect: () => <SettingsState>[
+          const SettingsStateLoading(),
+          const SettingsStateLoaded(selectedLanguageCode: 'en'),
+          const SettingsStateLoading(),
+          const SettingsStateLoaded(selectedLanguageCode: 'pl'),
         ],
       );
+    });
+
+    group('logout method', () {
+      test('emits LogoutFailedEvent when signOut fails', () async {
+        when(signOutUseCase()).thenAnswer(
+          (_) async => Either.failure<void>(
+            const UnexpectedError(message: 'sign out failed'),
+          ),
+        );
+
+        final SettingsCubit cubit = buildCubit();
+        final List<SettingsPresentationEvent> events = <SettingsPresentationEvent>[];
+        final StreamSubscription<SettingsPresentationEvent> sub = cubit.presentation.listen(events.add);
+
+        await cubit.logout();
+        await pumpEventQueue();
+
+        expect(events, contains(const LogoutFailedEvent()));
+        await sub.cancel();
+        await cubit.close();
+      });
+
+      test('does not emit LogoutFailedEvent when signOut succeeds', () async {
+        when(signOutUseCase()).thenAnswer(
+          (_) async => Either.success<void>(null),
+        );
+
+        final SettingsCubit cubit = buildCubit();
+        final List<SettingsPresentationEvent> events = <SettingsPresentationEvent>[];
+        final StreamSubscription<SettingsPresentationEvent> sub = cubit.presentation.listen(events.add);
+
+        await cubit.logout();
+        await pumpEventQueue();
+
+        expect(events, isNot(contains(const LogoutFailedEvent())));
+        await sub.cancel();
+        await cubit.close();
+      });
     });
   });
 }

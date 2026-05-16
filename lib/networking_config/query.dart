@@ -1,6 +1,10 @@
-const latitude = 'lat';
-const longitude = 'lon';
-const language = 'lang';
-const units = 'units';
-const appId = 'appid';
-const metric = 'metric';
+class WeatherAppQuery {
+  const WeatherAppQuery._();
+
+  static const String latitude = 'lat';
+  static const String longitude = 'lon';
+  static const String language = 'lang';
+  static const String units = 'units';
+  static const String appId = 'appid';
+  static const String metric = 'metric';
+}

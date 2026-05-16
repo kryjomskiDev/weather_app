@@ -24,6 +24,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "authEmailLabel": MessageLookupByLibrary.simpleMessage("E-mail"),
+        "authErrorGeneric": MessageLookupByLibrary.simpleMessage(
+            "Coś poszło nie tak. Spróbuj ponownie."),
+        "authGoToLogin":
+            MessageLookupByLibrary.simpleMessage("Masz już konto? Zaloguj się"),
+        "authGoToRegister": MessageLookupByLibrary.simpleMessage(
+            "Nie masz konta? Zarejestruj się"),
+        "authLoginButton": MessageLookupByLibrary.simpleMessage("Zaloguj"),
+        "authLoginTitle": MessageLookupByLibrary.simpleMessage("Logowanie"),
+        "authPasswordLabel": MessageLookupByLibrary.simpleMessage("Hasło"),
+        "authRegisterButton":
+            MessageLookupByLibrary.simpleMessage("Zarejestruj"),
+        "authRegisterTitle":
+            MessageLookupByLibrary.simpleMessage("Utwórz konto"),
         "homePageErrorTitle": MessageLookupByLibrary.simpleMessage(
             "Coś poszło nie tak, spróbuj ponownie"),
         "homePageLocationDisabledTitle": MessageLookupByLibrary.simpleMessage(
@@ -36,6 +50,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "homePageSettingsButtonTitle":
             MessageLookupByLibrary.simpleMessage("Ustawienia"),
         "homePageTemperature": m0,
+        "mainNavHome": MessageLookupByLibrary.simpleMessage("Główna"),
+        "mainNavSearch": MessageLookupByLibrary.simpleMessage("Szukaj"),
+        "mainNavSettings": MessageLookupByLibrary.simpleMessage("Ustawienia"),
+        "searchPagePlaceholder": MessageLookupByLibrary.simpleMessage(
+            "Wyszukiwanie miasta pojawi się tutaj."),
         "settingsPageCloseButtonTitle":
             MessageLookupByLibrary.simpleMessage("Zamknij"),
         "settingsPageLanguage": MessageLookupByLibrary.simpleMessage("Język"),
@@ -52,6 +71,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Uprawnienia lokalizacji przyznane"),
         "settingsPageLocationPermissionInfo": MessageLookupByLibrary.simpleMessage(
-            "By uzyskać dostęp do lokalizacji, przyznaj uprawnienia w ustawieniach systemowych")
+            "By uzyskać dostęp do lokalizacji, przyznaj uprawnienia w ustawieniach systemowych"),
+        "settingsPageLogoutTitle":
+            MessageLookupByLibrary.simpleMessage("Wyloguj"),
+        "splashPageDontHaveAccountTitle": MessageLookupByLibrary.simpleMessage(
+            "Nie masz konta? Zarejestruj się"),
+        "splashPageSignInButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Zaloguj się"),
+        "splashPageWelcomeDescription": MessageLookupByLibrary.simpleMessage(
+            "Sprawdź pogodę w swoim mieście, w dowolnym miejscu na świecie."),
+        "splashPageWelcomeTitle": MessageLookupByLibrary.simpleMessage("Witaj!")
       };
 }

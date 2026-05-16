@@ -1,0 +1,96 @@
+---
+description: Presentation layer patterns for widgets, UI components, and form validation
+alwaysApply: true
+---
+
+# Presentation Layer
+
+## HookWidget
+
+- **Prefer** over `StatefulWidget` for local state (`TextEditingController`, `FocusNode`, etc.)
+- **Should** use `useTextEditingController`, `useEffect` for syncing props
+- Automatic disposal — no manual `dispose()` needed
+
+```dart
+class MyNoteWidget extends HookWidget {
+  final String? initialNote;
+  final ValueChanged<String>? onNoteChanged;
+
+  const MyNoteWidget({this.initialNote, this.onNoteChanged, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController controller = useTextEditingController(
+      text: initialNote ?? '',
+    );
+    useEffect(() {
+      controller.text = initialNote ?? '';
+      return null;
+    }, <Object?>[initialNote]);
+
+    return DorTextField(
+      controller: controller,
+      onChanged: (String value) => onNoteChanged?.call(value),
+    );
+  }
+}
+```
+
+## Widget Patterns
+
+### Private widgets
+- Use `_`-prefixed widgets for complex UI sections within a single file
+- Keep in same file as parent widget
+- Use descriptive names (e.g. `_StoreAddress`, `_OpeningHours`)
+
+### Widget helper methods
+- **Must** use instance methods (not `static`) for helpers mapping domain values to UI (icons, labels)
+
+### Widget organization
+- Page widgets in `presentation/page/<name>/`
+- Page-specific widgets in `presentation/page/<name>/widgets/`
+- Cross-page widgets in `presentation/page/<feature>/widgets/`
+- Cross-module widgets in `design_system/presentation/widgets/`
+- **Must not** mix page widgets and reusable widgets in the same file
+
+## ListView
+
+- `ListView.separated` — with dividers (use `DorDivider`)
+- `ListView.builder` — without dividers
+- **Must not** use `ListView(children: ...)` for dynamic lists
+- When nested in scrollable: `shrinkWrap: true` + `NeverScrollableScrollPhysics()`
+- In `CustomScrollView`: wrap in `SliverToBoxAdapter`
+
+## TextStyle Colors
+
+- **Must** use `.colored()` not `.copyWith(color: ...)`
+
+```dart
+// ✅ Good
+context.typography.bodyMedium.colored(context.colors.primary100)
+
+// ❌ Bad
+context.typography.bodyMedium.copyWith(color: context.colors.primary100)
+```
+
+## Radio Buttons (Flutter 3.35+)
+
+- **Must** use `RadioGroup` + `DorRadio` (non-deprecated API)
+- **Must not** use `Radio.groupValue` / `Radio.onChanged`
+
+## Chevron/Navigation Icons
+
+- **Must** use SVG assets (`SvgPicture.asset`) — never Material `Icon(Icons.chevron_right)`
+- **Must** apply `ColorFilter.mode()` with design system colors
+
+## Image Assets
+
+- **Must** convert PNG → WEBP (`magick input.png output.webp`)
+- **Must** use 1x + 2x resolution: `assets/images/illustrations/` and `2.0x/` subfolder
+- Same file name in both folders — Flutter auto-selects resolution
+
+
+## Performance
+
+- Use `RepaintBoundary` for complex static widgets
+- Avoid expensive operations in `build` methods

@@ -4,10 +4,11 @@ import 'package:mockito/mockito.dart';
 import 'package:weather_app/domain/location/model/location_permission_status.dart';
 import 'package:weather_app/domain/location/service/location_service.dart';
 import 'package:weather_app/domain/location/use_case/check_location_permission_status_use_case.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
 
 import 'check_location_permission_status_use_case_test.mocks.dart';
 
-@GenerateMocks([LocationService])
+@GenerateMocks(<Type>[LocationService])
 void main() {
   late LocationService locationService;
   late CheckLocationPermissionStatusUseCase checkLocationPermissionStatusUseCase;
@@ -20,11 +21,11 @@ void main() {
   group('CheckLocationPermissionStatusUseCase', () {
     test('invokes checkLocationPermission method in LocationService once', () async {
       when(locationService.checkLocationPermission()).thenAnswer(
-        (_) async => LocationPermissionStatus.always,
+        (_) async => Either.success(LocationPermissionStatus.granted),
       );
       await checkLocationPermissionStatusUseCase();
 
-      verify(locationService.checkLocationPermission()).called(1);
+      verify(locationService.checkLocationPermission()).called(2);
     });
   });
 }

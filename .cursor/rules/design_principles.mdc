@@ -1,0 +1,35 @@
+---
+description: Core design principles (KISS, DRY, SOLID, YAGNI) that guide all code decisions
+alwaysApply: true
+---
+
+# Design Principles
+
+These principles take precedence when making design and implementation decisions. Apply them in every code change.
+
+## KISS — Keep It Simple
+
+- Prefer the simplest solution that meets the requirement
+- Avoid unnecessary abstractions, wrappers, or indirection layers
+- If a feature can be achieved with fewer classes/files, do that
+- Don't build frameworks when a function will do
+
+## DRY — Don't Repeat Yourself
+
+- Extract shared logic into helpers, extensions, or base classes when the same pattern appears 3+ times
+- Use a shared helper when multiple blocks differ only in data (not structure)
+- Don't DRY prematurely — two similar blocks are fine; three means extract
+
+## SOLID
+
+- **Single Responsibility**: Each class/widget does one thing. Split when a class has multiple reasons to change.
+- **Open/Closed**: Prefer extending behaviour (e.g. new enum values, new subclasses) over modifying existing code.
+- **Liskov Substitution**: Subtypes must be usable wherever their parent is expected.
+- **Interface Segregation**: Widgets and functions should depend only on the data they actually use — don't pass an entire model when only two fields are needed.
+- **Dependency Inversion**: Depend on abstractions (interfaces/abstract classes), not concrete implementations, especially in the data layer.
+
+## YAGNI — You Aren't Gonna Need It
+
+- Don't add code, parameters, or abstractions "just in case"
+- Remove dead code (unused methods, getters, imports)
+- Build what is required now; extend later when needed

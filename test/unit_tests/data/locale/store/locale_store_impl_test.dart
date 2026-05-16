@@ -1,53 +1,30 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:weather_app/data/locale/data_source/locale_data_source.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/data/locale/store/locale_store_impl.dart';
-import 'package:weather_app/domain/locale/store/locale_store.dart';
+import 'package:weather_app/extensions/either_extensions.dart';
 
-import 'locale_store_impl_test.mocks.dart';
-
-@GenerateMocks([LocaleDataSource])
 void main() {
-  late LocaleDataSource localeDataSource;
-  late LocaleStore localeStore;
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    localeDataSource = MockLocaleDataSource();
-    localeStore = LocaleStoreImpl(localeDataSource);
-  });
+  group('LocaleStoreImpl', () {
+    late LocaleStoreImpl localeStore;
 
-  group('LocaleStore', () {
-    const languageCode = 'en';
-
-    group('getSelectedLanguageCode method', () {
-      test('should return selected language code from cache', () {
-        when(localeDataSource.getSelectedLanguageCode()).thenReturn(languageCode);
-
-        final result = localeStore.getSelectedLanguageCode();
-
-        verify(localeDataSource.getSelectedLanguageCode()).called(1);
-        expect(result, equals(languageCode));
-      });
-
-      test('should return null if no language code is selected', () {
-        when(localeDataSource.getSelectedLanguageCode()).thenReturn(null);
-
-        final result = localeStore.getSelectedLanguageCode();
-
-        verify(localeDataSource.getSelectedLanguageCode()).called(1);
-        expect(result, isNull);
-      });
+    setUp(() async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      localeStore = LocaleStoreImpl(prefs);
     });
 
-    group('saveLanguageCode', () {
-      test('should save language code in cache', () async {
-        const languageCode = 'US';
+    test('getSelectedLanguageCode returns null when unset', () {
+      expect(localeStore.getSelectedLanguageCode().extractValueOrNull(), isNull);
+    });
 
-        await localeDataSource.saveLanguageCode(languageCode);
+    test('saveLanguageCode persists value readable by getSelectedLanguageCode', () async {
+      const String languageCode = 'en';
 
-        verify(localeDataSource.saveLanguageCode(languageCode)).called(1);
-      });
+      await localeStore.saveLanguageCode(languageCode);
+
+      expect(localeStore.getSelectedLanguageCode().extractValueOrNull(), equals(languageCode));
     });
   });
 }

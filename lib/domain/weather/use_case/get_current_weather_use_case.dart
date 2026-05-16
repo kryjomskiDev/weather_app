@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';
 import 'package:weather_app/domain/weather/service/weather_service.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
 
 @injectable
 class GetCurrentWeatherUseCase {
@@ -8,14 +10,9 @@ class GetCurrentWeatherUseCase {
 
   const GetCurrentWeatherUseCase(this._weatherService);
 
-  Future<CurrentWeather> call({
+  Future<Either<GenericError, CurrentWeather>> call({
     required double latitude,
     required double longitude,
     required String languageCode,
-  }) =>
-      _weatherService.getCurrentWeather(
-        latitude: latitude,
-        longitude: longitude,
-        languageCode: languageCode,
-      );
+  }) => _weatherService.getCurrentWeather(latitude: latitude, longitude: longitude, languageCode: languageCode);
 }

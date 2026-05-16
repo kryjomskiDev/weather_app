@@ -12,9 +12,29 @@
     "settingsPageLanguageEnglish": "Angielski",
     "settingsPageLanguagePolish": "Polski",
     "settingsPageCloseButtonTitle": "Zamknij",
+    "settingsPageLogoutTitle": "Wyloguj",
     "settingsPageLocationPermission": "Uprawnienia lokalizacji",
     "settingsPageLocationPermissionGranted": "Uprawnienia lokalizacji przyznane",
     "settingsPageLocationPermissionDenied": "Uprawnienia lokalizacji odmówione",
-    "settingsPageLocationPermissionInfo": "By uzyskać dostęp do lokalizacji, przyznaj uprawnienia w ustawieniach systemowych"
+    "settingsPageLocationPermissionInfo": "By uzyskać dostęp do lokalizacji, przyznaj uprawnienia w ustawieniach systemowych",
 
+    "authLoginTitle": "Logowanie",
+    "authRegisterTitle": "Utwórz konto",
+    "authEmailLabel": "E-mail",
+    "authPasswordLabel": "Hasło",
+    "authLoginButton": "Zaloguj",
+    "authRegisterButton": "Zarejestruj",
+    "authGoToRegister": "Nie masz konta? Zarejestruj się",
+    "authGoToLogin": "Masz już konto? Zaloguj się",
+    "authErrorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
+
+    "mainNavHome": "Główna",
+    "mainNavSearch": "Szukaj",
+    "mainNavSettings": "Ustawienia",
+    "searchPagePlaceholder": "Wyszukiwanie miasta pojawi się tutaj.",
+
+    "splashPageWelcomeTitle": "Witaj!",
+    "splashPageWelcomeDescription": "Sprawdź pogodę w swoim mieście, w dowolnym miejscu na świecie.",
+    "splashPageSignInButtonTitle": "Zaloguj się",
+    "splashPageDontHaveAccountTitle": "Nie masz konta? Zarejestruj się"
 }

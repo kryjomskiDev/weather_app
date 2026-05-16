@@ -1,7 +1,6 @@
-include: package:flutter_lints/flutter.yaml
-
 linter:
   rules:
+    always_use_package_imports: true
     always_declare_return_types: true
     avoid_catching_errors: true
     avoid_dynamic_calls: true
@@ -19,40 +18,64 @@ linter:
     unawaited_futures: true
     unnecessary_statements: true
     unnecessary_await_in_return: true
-    prefer_single_quotes: true
-    prefer_const_constructors: true
     flutter_style_todos: true
-    always_use_package_imports: true
-    avoid_bool_literals_in_conditional_expressions: true
+    always_put_required_named_parameters_first: true
+    always_specify_types: true
+    avoid_double_and_int_checks: true
     avoid_multiple_declarations_per_line: true
     avoid_unused_constructor_parameters: true
+    conditional_uri_does_not_exist: true
+    leading_newlines_in_multiline_strings: true
+    no_literal_bool_comparisons: true
     noop_primitive_operations: true
+    parameter_assignments: true
+    prefer_asserts_in_initializer_lists: true
+    prefer_asserts_with_message: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
     prefer_expression_function_bodies: true
-    prefer_null_aware_method_calls: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_mixin: true
     require_trailing_commas: true
-    sized_box_shrink_expand: true
-    unnecessary_lambdas: true
-    unnecessary_null_checks: true
-    unnecessary_parenthesis: true
+    type_annotate_public_apis: true
+    unreachable_from_main: true
     use_colored_box: true
     use_decorated_box: true
-    use_null_aware_elements: true
+    use_named_constants: true
+    use_string_buffers: true
+    sort_constructors_first: false
+    sort_pub_dependencies: false
+    omit_local_variable_types: false
+    omit_obvious_local_variable_types: false
+    avoid_types_on_closure_parameters: false
+    document_ignores: false
+    avoid_final_parameters: false
+    directives_ordering: false
+    comment_references: false
+    prefer_single_quotes: false
+    omit_obvious_property_types: false
+    unsafe_variance: false
+
 analyzer:
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
   errors:
-    invalid_use_of_visible_for_testing_member: error
     avoid_function_literals_in_foreach_calls: ignore
     prefer_for_elements_to_map_fromiterable: ignore
-    depend_on_referenced_packages: ignore
+    invalid_use_of_visible_for_testing_member: error
+    flutter_style_todos: ignore
+    avoid_bool_literals_in_conditional_expressions: ignore
   exclude:
     - "**.mocks.dart"
     - "**.g.dart"
-    - "**.freezed.dart"
-    - "**.graphql.dart"
-    - "lib/generated/**"
-    - "lib/injectable/injectable.config.dart"
+    - "**/generated/**"
+    - "**/dependency_injection.module.dart"
+    - "integration_test/**"
+
 formatter:
+  trailing_commas: preserve
   page_width: 120

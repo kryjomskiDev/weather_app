@@ -9,7 +9,7 @@ class AuthHeaderInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    options.queryParameters[appId] = envs.apiKey;
+    options.queryParameters[WeatherAppQuery.appId] = envs.apiKey;
 
     handler.next(options);
   }

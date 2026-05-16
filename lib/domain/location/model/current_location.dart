@@ -11,12 +11,12 @@ class CurrentLocation extends Equatable {
   });
 
   @override
-  List<Object> get props => [latitude, longitude];
+  List<Object> get props => <Object>[latitude, longitude];
 }
 
 extension CurrentLocationMapper on Position {
   CurrentLocation toDomain() => CurrentLocation(
-        latitude: latitude,
-        longitude: longitude,
-      );
+    latitude: latitude,
+    longitude: longitude,
+  );
 }

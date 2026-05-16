@@ -21,4 +21,37 @@ class StandardTheme extends AppTheme {
 
   @override
   Color get white => AppStandardColors.white;
+
+  @override
+  Color get blueDeep => AppStandardColors.blueDeep;
+
+  @override
+  Color get blueLight => AppStandardColors.blueLight;
+
+  @override
+  Color get surfaceLight => AppStandardColors.surfaceLight;
+
+  @override
+  Color get accentYellow => AppStandardColors.accentYellow;
+
+  @override
+  Color get accentYellowDeep => AppStandardColors.accentYellowDeep;
+
+  @override
+  Color get textPrimary => AppStandardColors.textPrimary;
+
+  @override
+  Color get textSecondary => AppStandardColors.textSecondary;
+
+  @override
+  Color get shadowBlue => AppStandardColors.shadowBlue;
+
+  @override
+  LinearGradient get heroBackgroundGradient => AppStandardGradients.heroBackground;
+
+  @override
+  LinearGradient get primaryCardGradient => AppStandardGradients.primaryCard;
+
+  @override
+  Color get error => AppStandardColors.error;
 }

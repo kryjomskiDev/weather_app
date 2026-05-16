@@ -9,7 +9,7 @@ import 'package:weather_app/injectable/injectable.dart';
 import 'package:weather_app/injectable/staging_environment.dart';
 import 'package:system_proxy/system_proxy.dart';
 
-const timeout = Duration(seconds: 20);
+const Duration timeout = Duration(seconds: 20);
 
 @module
 abstract class DioModule {
@@ -18,15 +18,15 @@ abstract class DioModule {
   @prod
   @staging
   Dio dio(Envs envs) {
-    final dio = Dio(
+    final Dio dio = Dio(
       BaseOptions(connectTimeout: timeout, receiveTimeout: timeout, sendTimeout: timeout, baseUrl: envs.apiUrl),
     );
 
     SystemProxy.getProxySettings().then((Map<String, String>? systemProxy) {
       (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-        final client = HttpClient();
+        final HttpClient client = HttpClient();
         if (systemProxy != null) {
-          client.findProxy = (url) => 'PROXY ${systemProxy['host']}:${systemProxy['port']}';
+          client.findProxy = (Uri url) => 'PROXY ${systemProxy['host']}:${systemProxy['port']}';
         }
 
         client.badCertificateCallback = (X509Certificate cert, String host, int port) => Platform.isAndroid;
@@ -43,7 +43,7 @@ abstract class DioModule {
 }
 
 void registerInterceptors() {
-  final dio = getIt<Dio>();
+  final Dio dio = getIt<Dio>();
 
-  dio.interceptors.addAll([AuthHeaderInterceptor(getIt<Envs>())]);
+  dio.interceptors.addAll(<Interceptor>[AuthHeaderInterceptor(getIt<Envs>())]);
 }

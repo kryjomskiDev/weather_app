@@ -5,55 +5,46 @@ import 'package:weather_app/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:weather_app/presentation/widgets/buttons/weather_app_filled_button.dart';
 import 'package:weather_app/style/app_typography.dart';
 import 'package:weather_app/style/dimens.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
+import 'package:weather_app/utils/error_handling/errors/other_errors.dart';
 
 class HomeLocationErrorBody extends StatelessWidget {
   final HomeCubit cubit;
-  final HomeBodyErrorType type;
+  final GenericError error;
 
   const HomeLocationErrorBody({
     required this.cubit,
-    required this.type,
+    required this.error,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: Dimens.m,
-          vertical: Dimens.l,
+    padding: const EdgeInsetsDirectional.symmetric(
+      horizontal: Dimens.m,
+      vertical: Dimens.l,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        const Spacer(),
+        Text(
+          _getTitle(context),
+          textAlign: TextAlign.center,
+          style: AppTypography.headingSmall.copyWith(color: context.getColors().textPrimary),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Spacer(),
-            Text(
-              _getTitle(context),
-              textAlign: TextAlign.center,
-              style: AppTypography.headingSmall.copyWith(color: context.getColors().white),
-            ),
-            const Spacer(),
-            WeatherAppFilledButton(
-              title: Strings.of(context).homePageRefreshButtonTitle,
-              onTap: () => cubit.init(),
-            ),
-            const SizedBox(height: Dimens.m),
-            WeatherAppFilledButton(
-              title: Strings.of(context).homePageSettingsButtonTitle,
-              onTap: () => cubit.goToSettings(),
-            ),
-          ],
+        const Spacer(),
+        WeatherAppFilledButton(
+          title: Strings.of(context).homePageRefreshButtonTitle,
+          onTap: () => cubit.init(),
         ),
-      );
+      ],
+    ),
+  );
 
-  String _getTitle(BuildContext context) => switch (type) {
-        HomeBodyErrorType.error => Strings.of(context).homePageErrorTitle,
-        HomeBodyErrorType.locationDisabled => Strings.of(context).homePageLocationDisabledTitle,
-        HomeBodyErrorType.locationPermissionDenied => Strings.of(context).homePageLocationPermissionDeniedTitle,
-      };
-}
-
-enum HomeBodyErrorType {
-  locationDisabled,
-  locationPermissionDenied,
-  error,
+  String _getTitle(BuildContext context) => switch (error) {
+    LocationServiceDisabledError() => Strings.of(context).homePageLocationDisabledTitle,
+    LocationPermissionDeniedForeverError() => Strings.of(context).homePageLocationPermissionDeniedTitle,
+    _ => Strings.of(context).homePageErrorTitle,
+  };
 }

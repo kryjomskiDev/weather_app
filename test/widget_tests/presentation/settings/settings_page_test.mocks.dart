@@ -3,17 +3,18 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i4;
+import 'package:weather_app/domain/auth/use_case/sign_out_use_case.dart' as _i8;
 import 'package:weather_app/domain/locale/use_case/get_selected_language_code_use_case.dart'
-    as _i2;
-import 'package:weather_app/domain/locale/use_case/save_language_code_use_case.dart'
     as _i3;
-import 'package:weather_app/domain/location/model/location_permission_status.dart'
-    as _i6;
-import 'package:weather_app/domain/location/use_case/check_location_permission_status_use_case.dart'
+import 'package:weather_app/domain/locale/use_case/save_language_code_use_case.dart'
     as _i5;
+import 'package:weather_app/utils/error_handling/either.dart' as _i2;
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart'
+    as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -30,51 +31,73 @@ import 'package:weather_app/domain/location/use_case/check_location_permission_s
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [GetSelectedLanguageCodeUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetSelectedLanguageCodeUseCase extends _i1.Mock
-    implements _i2.GetSelectedLanguageCodeUseCase {
+    implements _i3.GetSelectedLanguageCodeUseCase {
   MockGetSelectedLanguageCodeUseCase() {
     _i1.throwOnMissingStub(this);
   }
+
+  @override
+  String call() =>
+      (super.noSuchMethod(
+            Invocation.method(#call, []),
+            returnValue: _i4.dummyValue<String>(
+              this,
+              Invocation.method(#call, []),
+            ),
+          )
+          as String);
 }
 
 /// A class which mocks [SaveLanguageCodeUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSaveLanguageCodeUseCase extends _i1.Mock
-    implements _i3.SaveLanguageCodeUseCase {
+    implements _i5.SaveLanguageCodeUseCase {
   MockSaveLanguageCodeUseCase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<void> call(String? languageCode) =>
+  _i6.Future<_i2.Either<_i7.GenericError, void>> call(String? languageCode) =>
       (super.noSuchMethod(
             Invocation.method(#call, [languageCode]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i6.Future<_i2.Either<_i7.GenericError, void>>.value(
+              _FakeEither_0<_i7.GenericError, void>(
+                this,
+                Invocation.method(#call, [languageCode]),
+              ),
+            ),
           )
-          as _i4.Future<void>);
+          as _i6.Future<_i2.Either<_i7.GenericError, void>>);
 }
 
-/// A class which mocks [CheckLocationPermissionStatusUseCase].
+/// A class which mocks [SignOutUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCheckLocationPermissionStatusUseCase extends _i1.Mock
-    implements _i5.CheckLocationPermissionStatusUseCase {
-  MockCheckLocationPermissionStatusUseCase() {
+class MockSignOutUseCase extends _i1.Mock implements _i8.SignOutUseCase {
+  MockSignOutUseCase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i6.LocationPermissionStatus> call() =>
+  _i6.Future<_i2.Either<_i7.GenericError, void>> call() =>
       (super.noSuchMethod(
             Invocation.method(#call, []),
-            returnValue: _i4.Future<_i6.LocationPermissionStatus>.value(
-              _i6.LocationPermissionStatus.denied,
+            returnValue: _i6.Future<_i2.Either<_i7.GenericError, void>>.value(
+              _FakeEither_0<_i7.GenericError, void>(
+                this,
+                Invocation.method(#call, []),
+              ),
             ),
           )
-          as _i4.Future<_i6.LocationPermissionStatus>);
+          as _i6.Future<_i2.Either<_i7.GenericError, void>>);
 }

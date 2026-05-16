@@ -16,11 +16,11 @@ class CurrentWeather extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        title,
-        description,
-        temperature,
-        icon,
-        locationName,
-      ];
+  List<Object?> get props => <Object?>[
+    title,
+    description,
+    temperature,
+    icon,
+    locationName,
+  ];
 }

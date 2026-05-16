@@ -12,8 +12,29 @@
     "settingsPageLanguageEnglish": "English",
     "settingsPageLanguagePolish": "Polish",
     "settingsPageCloseButtonTitle": "Close",
+    "settingsPageLogoutTitle": "Log out",
     "settingsPageLocationPermission": "Location permission",
     "settingsPageLocationPermissionGranted": "Location permission granted",
     "settingsPageLocationPermissionDenied": "Location permission denied",
-    "settingsPageLocationPermissionInfo": "To change location permissions, go to system settings"
+    "settingsPageLocationPermissionInfo": "To change location permissions, go to system settings",
+
+    "authLoginTitle": "Log in",
+    "authRegisterTitle": "Create account",
+    "authEmailLabel": "Email",
+    "authPasswordLabel": "Password",
+    "authLoginButton": "Log in",
+    "authRegisterButton": "Register",
+    "authGoToRegister": "Need an account? Register",
+    "authGoToLogin": "Already have an account? Log in",
+    "authErrorGeneric": "Something went wrong. Try again.",
+
+    "mainNavHome": "Home",
+    "mainNavSearch": "Search",
+    "mainNavSettings": "Settings",
+    "searchPagePlaceholder": "City search will be available here.",
+
+    "splashPageWelcomeTitle": "Welcome!",
+    "splashPageWelcomeDescription": "Check the weather in your city, anywhere in the world.",
+    "splashPageSignInButtonTitle": "Sign in",
+    "splashPageDontHaveAccountTitle": "Don't have an account? Sign up"
 }

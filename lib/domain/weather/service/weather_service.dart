@@ -1,7 +1,9 @@
 import 'package:weather_app/domain/weather/model/current_weather.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
 
 abstract interface class WeatherService {
-  Future<CurrentWeather> getCurrentWeather({
+  Future<Either<GenericError, CurrentWeather>> getCurrentWeather({
     required double latitude,
     required double longitude,
     required String languageCode,

@@ -1,5 +1,5 @@
 class SharedPreferencesKeys {
   SharedPreferencesKeys._();
 
-  static const selectedLangaugeCode = 'selectedLangaugeCode';
+  static const String selectedLangaugeCode = 'selectedLangaugeCode';
 }

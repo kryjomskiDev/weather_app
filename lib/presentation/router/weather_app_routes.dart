@@ -1,6 +1,11 @@
 enum WeatherAppRoutes {
+  splash('/splash'),
+  login('login'),
+  register('register'),
   home('/home'),
-  settings('settings');
+  search('/search'),
+  settings('/settings')
+  ;
 
   const WeatherAppRoutes(this.path);
 

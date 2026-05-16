@@ -6,8 +6,11 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:weather_app/domain/weather/model/current_weather.dart' as _i2;
+import 'package:weather_app/domain/weather/model/current_weather.dart' as _i6;
 import 'package:weather_app/domain/weather/service/weather_service.dart' as _i3;
+import 'package:weather_app/utils/error_handling/either.dart' as _i2;
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart'
+    as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,9 +27,8 @@ import 'package:weather_app/domain/weather/service/weather_service.dart' as _i3;
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
-class _FakeCurrentWeather_0 extends _i1.SmartFake
-    implements _i2.CurrentWeather {
-  _FakeCurrentWeather_0(Object parent, Invocation parentInvocation)
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -39,7 +41,8 @@ class MockWeatherService extends _i1.Mock implements _i3.WeatherService {
   }
 
   @override
-  _i4.Future<_i2.CurrentWeather> getCurrentWeather({
+  _i4.Future<_i2.Either<_i5.GenericError, _i6.CurrentWeather>>
+  getCurrentWeather({
     required double? latitude,
     required double? longitude,
     required String? languageCode,
@@ -50,16 +53,19 @@ class MockWeatherService extends _i1.Mock implements _i3.WeatherService {
               #longitude: longitude,
               #languageCode: languageCode,
             }),
-            returnValue: _i4.Future<_i2.CurrentWeather>.value(
-              _FakeCurrentWeather_0(
-                this,
-                Invocation.method(#getCurrentWeather, [], {
-                  #latitude: latitude,
-                  #longitude: longitude,
-                  #languageCode: languageCode,
-                }),
-              ),
-            ),
+            returnValue:
+                _i4.Future<
+                  _i2.Either<_i5.GenericError, _i6.CurrentWeather>
+                >.value(
+                  _FakeEither_0<_i5.GenericError, _i6.CurrentWeather>(
+                    this,
+                    Invocation.method(#getCurrentWeather, [], {
+                      #latitude: latitude,
+                      #longitude: longitude,
+                      #languageCode: languageCode,
+                    }),
+                  ),
+                ),
           )
-          as _i4.Future<_i2.CurrentWeather>);
+          as _i4.Future<_i2.Either<_i5.GenericError, _i6.CurrentWeather>>);
 }

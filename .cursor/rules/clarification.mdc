@@ -1,0 +1,57 @@
+---
+description: Structured clarification before acting on ambiguous, illogical, or incomplete requirements
+alwaysApply: false
+---
+
+# Clarification-First Protocol
+
+Ask questions instead of guessing when requirements are unclear, contradictory, illogical, or have multiple valid interpretations. This rule defines when and how to ask, and when to just proceed.
+
+## When to Ask
+
+- **Contradictions** — Two requirements are mutually exclusive (e.g. "real-time updates" + "offline-only"). Resolve conflicts first before clarifying detail.
+- **Missing context** — A key piece of information is absent and the wrong assumption would change the implementation significantly (e.g. which data source to use, which screen to navigate to).
+- **Multiple valid interpretations** — The instruction can mean two or more things and they lead to different implementations.
+- **Illogical or unexpected requirement** — Something in the spec doesn't make sense given the codebase, design, or prior decisions. Don't silently comply — flag it.
+- **Irreversible action under ambiguity** — If the action is hard to undo (e.g. deleting data, changing an API contract, routing architecture) and the intent is unclear, stop and ask. For reversible changes, use judgment and proceed.
+
+## How to Ask
+
+- **Batch related questions** — Ask all unresolved questions for the current task in one message, not one at a time. Fewer turns with more coverage is always better.
+- **Use the `AskQuestion` tool** with structured multiple-choice options when possible. This forces precision and reduces back-and-forth.
+- **Present concrete alternatives** — Instead of "what do you want?", describe each interpretation and its consequence:
+  > "Option A navigates to the rewards tab root; Option B navigates directly to monthly offers. Which do you want?"
+- **Prioritize high-impact questions** — Ask about things that change architecture, routing, or data flow first. Skip questions about trivial details (e.g. exact wording, icon choice) that can be inferred or easily changed later.
+- **Use hypothetical scenarios** — When a requirement is vague, describe a concrete example of each interpretation to help the user choose.
+
+## The Five Whys (for illogical requirements)
+
+When something doesn't make sense, ask "why" to surface the real intent before implementing literally:
+
+> "This navigates away from the current flow — is the goal to switch tabs, or to push a new screen on the current stack?"
+
+Stopping at the surface question often misses the actual need.
+
+## When NOT to Ask
+
+- The requirement is clear and there is only one reasonable implementation.
+- The decision is easily reversible and the impact is small.
+- The answer can be found by reading the codebase (check existing patterns before asking).
+- The question is about a trivial detail that doesn't affect correctness (colours, copy, icons — use the design or existing style).
+- You would be asking the user to make a decision that is yours to make as an engineer (e.g. "should I use a `final` variable here?").
+
+## Anti-Patterns to Avoid
+
+- **Silent guessing** — Picking an interpretation and implementing it without flagging the ambiguity. Even if the guess is right, the user loses confidence that edge cases were considered.
+- **Over-questioning** — Asking for confirmation on obvious things or things easily inferred from context. This erodes trust as much as guessing does.
+- **Serial questioning** — Asking one question, waiting for an answer, then asking another. Batch all questions in one message.
+- **Vague questions** — "What do you want here?" gives the user nothing to react to. Always provide options.
+
+## Summary
+
+```
+Ambiguous + irreversible → Ask
+Ambiguous + reversible   → Use best judgment, note the assumption
+Clear                    → Proceed
+Illogical               → Flag it, ask for intent
+```

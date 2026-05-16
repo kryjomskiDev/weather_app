@@ -1,8 +1,12 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/data/location/data_source/location_data_source.dart';
 import 'package:weather_app/domain/location/model/current_location.dart';
 import 'package:weather_app/domain/location/model/location_permission_status.dart';
 import 'package:weather_app/domain/location/service/location_service.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
+import 'package:weather_app/utils/error_handling/errors/other_errors.dart';
 
 @LazySingleton(as: LocationService)
 class LocationServiceImpl implements LocationService {
@@ -11,26 +15,62 @@ class LocationServiceImpl implements LocationService {
   const LocationServiceImpl(this._locationDataSource);
 
   @override
-  Future<LocationPermissionStatus> checkLocationPermission() async {
-    final dto = await _locationDataSource.checkLocationPermission();
+  Future<Either<GenericError, LocationPermissionStatus>> checkLocationPermission() async {
+    try {
+      final LocationPermission dto = await _locationDataSource.checkLocationPermission();
 
-    return dto.toDomain();
+      if (dto == LocationPermission.deniedForever) {
+        return const Failure<GenericError, LocationPermissionStatus>(LocationPermissionDeniedForeverError());
+      } else {
+        return Success<GenericError, LocationPermissionStatus>(dto.toDomain());
+      }
+    } catch (_) {
+      return const Failure<GenericError, LocationPermissionStatus>(
+        PlatformError(message: 'An unexpected error occurred'),
+      );
+    }
   }
 
   @override
-  Future<CurrentLocation> getCurrentLocation() async {
-    final dto = await _locationDataSource.getCurrentLocation();
+  Future<Either<GenericError, CurrentLocation>> getCurrentLocation() async {
+    try {
+      final Position dto = await _locationDataSource.getCurrentLocation();
 
-    return dto.toDomain();
+      return Success<GenericError, CurrentLocation>(dto.toDomain());
+    } catch (_) {
+      return const Failure<GenericError, CurrentLocation>(PlatformError(message: 'An unexpected error occurred'));
+    }
   }
 
   @override
-  Future<LocationPermissionStatus> requestLocationPermission() async {
-    final dto = await _locationDataSource.requestLocationPermission();
+  Future<Either<GenericError, LocationPermissionStatus>> requestLocationPermission() async {
+    try {
+      final LocationPermission dto = await _locationDataSource.requestLocationPermission();
 
-    return dto.toDomain();
+      if (dto == LocationPermission.deniedForever) {
+        return const Failure<GenericError, LocationPermissionStatus>(LocationPermissionDeniedForeverError());
+      } else {
+        return Success<GenericError, LocationPermissionStatus>(dto.toDomain());
+      }
+    } catch (_) {
+      return const Failure<GenericError, LocationPermissionStatus>(
+        PlatformError(message: 'An unexpected error occurred'),
+      );
+    }
   }
 
   @override
-  Future<bool> isLocationServiceEnabled() => _locationDataSource.isLocationServiceEnabled();
+  Future<Either<GenericError, bool>> isLocationServiceEnabled() async {
+    try {
+      final bool isEnabled = await _locationDataSource.isLocationServiceEnabled();
+
+      if (isEnabled) {
+        return Success<GenericError, bool>(isEnabled);
+      } else {
+        return const Failure<GenericError, bool>(LocationServiceDisabledError());
+      }
+    } catch (_) {
+      return const Failure<GenericError, bool>(PlatformError(message: 'An unexpected error occurred'));
+    }
+  }
 }

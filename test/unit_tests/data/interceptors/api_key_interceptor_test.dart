@@ -8,7 +8,7 @@ import 'package:weather_app/networking_config/query.dart';
 
 import 'api_key_interceptor_test.mocks.dart';
 
-@GenerateMocks([RequestInterceptorHandler, Envs])
+@GenerateMocks(<Type>[RequestInterceptorHandler, Envs])
 void main() {
   late AuthHeaderInterceptor interceptor;
   late RequestInterceptorHandler handler;
@@ -21,14 +21,14 @@ void main() {
   });
 
   group('AuthHeaderInterceptor onRequest method', () {
-    final options = RequestOptions(path: 'https://sampleurl.com');
+    final RequestOptions options = RequestOptions(path: 'https://sampleurl.com');
 
     test('should add api key to the request', () async {
       when(envs.apiKey).thenReturn('1234567890');
 
       await interceptor.onRequest(options, handler);
       verify(handler.next(options));
-      expect(options.queryParameters[appId], equals('1234567890'));
+      expect(options.queryParameters[WeatherAppQuery.appId], equals('1234567890'));
     });
   });
 }

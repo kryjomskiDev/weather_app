@@ -1,71 +1,37 @@
 import 'package:equatable/equatable.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
 
-sealed class HomeState with EquatableMixin {
+sealed class HomeState extends Equatable {
   const HomeState();
 
-  const factory HomeState.idle() = HomeStateIdle;
+  @override
+  List<Object?> get props => <Object?>[];
+}
 
-  const factory HomeState.loading() = HomeStateLoading;
+class HomeStateLoading extends HomeState {
+  final CurrentWeather? currentWeather;
 
-  const factory HomeState.loaded({required CurrentWeather currentWeather}) = HomeStateLoaded;
-
-  const factory HomeState.refreshPage({required CurrentWeather currentWeather}) = HomeStateRefreshPage;
-
-  const factory HomeState.error() = HomeStateError;
-
-  const factory HomeState.goToSettings() = HomeStateGoToSettings;
-
-  const factory HomeState.locationDisabled() = HomeStateLocationDisabled;
-
-  const factory HomeState.locationPermissionDenied() = HomeStateLocationPermissionDenied;
+  const HomeStateLoading({this.currentWeather});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => <Object?>[currentWeather];
 }
 
-abstract class HomeStateBuilder {}
-
-abstract class HomeStateListener {}
-
-class HomeStateIdle extends HomeState {
-  const HomeStateIdle();
-}
-
-class HomeStateLoading extends HomeState implements HomeStateBuilder {
-  const HomeStateLoading();
-}
-
-class HomeStateLoaded extends HomeState implements HomeStateBuilder {
+class HomeStateLoaded extends HomeState {
   final CurrentWeather currentWeather;
 
   const HomeStateLoaded({required this.currentWeather});
 
   @override
-  List<Object?> get props => [currentWeather];
+  List<Object?> get props => <Object?>[currentWeather];
 }
 
-class HomeStateRefreshPage extends HomeState implements HomeStateBuilder {
-  final CurrentWeather currentWeather;
+class HomeStateError extends HomeState {
+  final GenericError error;
 
-  const HomeStateRefreshPage({required this.currentWeather});
+  const HomeStateError({required this.error});
 
   @override
-  List<Object?> get props => [currentWeather];
-}
-
-class HomeStateError extends HomeState implements HomeStateBuilder {
-  const HomeStateError();
-}
-
-class HomeStateGoToSettings extends HomeState implements HomeStateListener {
-  const HomeStateGoToSettings();
-}
-
-class HomeStateLocationDisabled extends HomeState implements HomeStateBuilder {
-  const HomeStateLocationDisabled();
-}
-
-class HomeStateLocationPermissionDenied extends HomeState implements HomeStateBuilder {
-  const HomeStateLocationPermissionDenied();
+  List<Object?> get props => <Object?>[error];
 }

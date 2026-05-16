@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:weather_app/domain/auth/use_case/sign_out_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/get_selected_language_code_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/save_language_code_use_case.dart';
-import 'package:weather_app/domain/location/model/location_permission_status.dart';
-import 'package:weather_app/domain/location/use_case/check_location_permission_status_use_case.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
 import 'package:weather_app/injectable/injectable.dart';
 import 'package:weather_app/presentation/pages/settings/cubit/settings_cubit.dart';
 import 'package:weather_app/presentation/pages/settings/settings_page.dart';
 import 'package:weather_app/presentation/router/weather_app_routes.dart';
-import 'package:weather_app/presentation/widgets/app_loading_indicator.dart';
+import 'package:weather_app/presentation/widgets/weather_app_loading_indicator.dart';
 import 'package:weather_app/presentation/widgets/buttons/weather_app_filled_button.dart';
 import 'package:weather_app/presentation/widgets/buttons/weather_app_radio_button.dart';
 
@@ -18,70 +19,77 @@ import '../../utils/mock_router.dart';
 import '../../utils/widget_test_bootstrap.dart';
 import 'settings_page_test.mocks.dart';
 
-@GenerateMocks([
+@GenerateMocks(<Type>[
   GetSelectedLanguageCodeUseCase,
   SaveLanguageCodeUseCase,
-  CheckLocationPermissionStatusUseCase,
+  SignOutUseCase,
 ])
 void main() {
-  late GetSelectedLanguageCodeUseCase getSelectedLanguageCodeUseCase;
-  late SaveLanguageCodeUseCase saveLanguageCodeUseCase;
-  late CheckLocationPermissionStatusUseCase checkLocationPermissionStatusUseCase;
+  late MockSignOutUseCase signOutUseCase;
+  late MockGetSelectedLanguageCodeUseCase getSelectedLanguageCodeUseCase;
+  late MockSaveLanguageCodeUseCase saveLanguageCodeUseCase;
   late SettingsCubit settingsCubit;
 
   setUp(() {
+    signOutUseCase = MockSignOutUseCase();
     getSelectedLanguageCodeUseCase = MockGetSelectedLanguageCodeUseCase();
     saveLanguageCodeUseCase = MockSaveLanguageCodeUseCase();
-    checkLocationPermissionStatusUseCase = MockCheckLocationPermissionStatusUseCase();
 
     settingsCubit = SettingsCubit(
+      signOutUseCase,
       getSelectedLanguageCodeUseCase,
       saveLanguageCodeUseCase,
-      checkLocationPermissionStatusUseCase,
     );
   });
 
   tearDown(getIt.reset);
-  const selectedLanguage = 'en';
+  const String selectedLanguage = 'en';
 
-  void simulateLoadedState({Duration? withDelay}) {
+  void simulateLoadedState({Duration? saveDelay}) {
     when(getSelectedLanguageCodeUseCase()).thenReturn(selectedLanguage);
-    when(checkLocationPermissionStatusUseCase()).thenAnswer((_) => Future.delayed(
-          withDelay ?? Duration.zero,
-          () => LocationPermissionStatus.always,
-        ));
+    when(saveLanguageCodeUseCase(any)).thenAnswer(
+      (_) async {
+        if (saveDelay != null) {
+          await Future<void>.delayed(saveDelay);
+        }
+        return Either.success<void>(null);
+      },
+    );
+    when(signOutUseCase()).thenAnswer((_) async => Either.success<void>(null));
   }
 
   testWidgets('SettingsPage displays loaded content correctly', (WidgetTester tester) async {
     simulateLoadedState();
     await tester.bootstrapWidgetTest(
-      overrides: [() => registerOverride<SettingsCubit>(() => settingsCubit)],
+      overrides: <void Function()>[() => registerOverride<SettingsCubit>(() => settingsCubit)],
       appRouter: getMockRouter(_settingsRoute),
     );
     await tester.pumpAndSettle();
 
     expect(find.text('Language'), findsOneWidget);
     expect(find.byType(WeatherAppRadioButton), findsExactly(2));
-    expect(find.text('Location permission granted'), findsOneWidget);
-    expect(find.text('To change location permissions, go to system settings'), findsOneWidget);
+    expect(find.text('Log out'), findsOneWidget);
     expect(find.byType(WeatherAppFilledButton), findsOneWidget);
   });
 
-  testWidgets('Settings Page displays loader while loading', (WidgetTester tester) async {
-    simulateLoadedState(withDelay: const Duration(seconds: 2));
+  testWidgets('Settings Page displays loader while saving language', (WidgetTester tester) async {
+    simulateLoadedState(saveDelay: const Duration(seconds: 2));
     await tester.bootstrapWidgetTest(
-      overrides: [() => registerOverride<SettingsCubit>(() => settingsCubit)],
+      overrides: <void Function()>[() => registerOverride<SettingsCubit>(() => settingsCubit)],
       appRouter: getMockRouter(_settingsRoute),
     );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('pl-language-button')));
     await tester.pump();
 
-    expect(find.byType(AppLoadingIndicator), findsOneWidget);
+    expect(find.byType(WeatherAppLoadingIndicator), findsOneWidget);
     await tester.pumpAndSettle();
   });
 }
 
-final _settingsRoute = GoRoute(
-  path: '/${WeatherAppRoutes.settings.path}',
+final GoRoute _settingsRoute = GoRoute(
+  path: WeatherAppRoutes.settings.path,
   name: WeatherAppRoutes.settings.name,
-  builder: (_, state) => const SettingsPage(),
+  builder: (_, GoRouterState state) => const SettingsPage(),
 );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppTypography {
-  static const fontFamily = 'Inter';
+  static const String fontFamily = 'Inter';
 
   /// Body Regular
-  static const bodyRegular = TextStyle(
+  static const TextStyle bodyRegular = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontSize: 16,
@@ -12,7 +12,7 @@ class AppTypography {
   );
 
   /// Body Medium Default
-  static const bodyMediumDefault = TextStyle(
+  static const TextStyle bodyMediumDefault = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
@@ -21,7 +21,7 @@ class AppTypography {
   );
 
   /// Body Medium Underline
-  static const bodyMediumUnderline = TextStyle(
+  static const TextStyle bodyMediumUnderline = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
@@ -31,7 +31,7 @@ class AppTypography {
   );
 
   /// Footnote Regular
-  static const footnoteRegular = TextStyle(
+  static const TextStyle footnoteRegular = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontSize: 14,
@@ -39,7 +39,7 @@ class AppTypography {
   );
 
   /// Footnote Medium
-  static const footnoteMedium = TextStyle(
+  static const TextStyle footnoteMedium = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
@@ -49,7 +49,7 @@ class AppTypography {
   );
 
   /// Caption 1 Regular
-  static const caption1Regular = TextStyle(
+  static const TextStyle caption1Regular = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontSize: 12,
@@ -57,7 +57,7 @@ class AppTypography {
   );
 
   /// Caption 1 Medium
-  static const caption1Medium = TextStyle(
+  static const TextStyle caption1Medium = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
@@ -66,7 +66,7 @@ class AppTypography {
   );
 
   /// Caption 1 SemiBold
-  static const caption1SemiBold = TextStyle(
+  static const TextStyle caption1SemiBold = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class AppTypography {
   );
 
   /// Caption 2 Medium
-  static const caption2Medium = TextStyle(
+  static const TextStyle caption2Medium = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
@@ -84,16 +84,7 @@ class AppTypography {
   );
 
   /// Heading Large
-  static const headingBig = TextStyle(
-    fontFamily: fontFamily,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w500,
-    fontSize: 64,
-    height: 1.33,
-  );
-
-  /// Heading Large
-  static const headingLarge = TextStyle(
+  static const TextStyle headingLarge = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w600,
@@ -102,7 +93,7 @@ class AppTypography {
   );
 
   /// Heading Medium
-  static const headingMedium = TextStyle(
+  static const TextStyle headingMedium = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w600,
@@ -111,11 +102,47 @@ class AppTypography {
   );
 
   /// Heading Small
-  static const headingSmall = TextStyle(
+  static const TextStyle headingSmall = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w600,
     fontSize: 16,
     height: 1.5,
+  );
+
+  /// Heading Large
+  static const TextStyle headingBig = TextStyle(
+    fontFamily: fontFamily,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 64,
+    height: 1.33,
+  );
+
+  /// Display Large
+  static const TextStyle displayLarge = TextStyle(
+    fontFamily: fontFamily,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 48,
+    height: 1.33,
+  );
+
+  /// Display Medium
+  static const TextStyle displayMedium = TextStyle(
+    fontFamily: fontFamily,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 40,
+    height: 1.33,
+  );
+
+  /// Display Small
+  static const TextStyle displaySmall = TextStyle(
+    fontFamily: fontFamily,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 32,
+    height: 1.33,
   );
 }

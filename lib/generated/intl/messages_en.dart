@@ -24,6 +24,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "authEmailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+        "authErrorGeneric": MessageLookupByLibrary.simpleMessage(
+            "Something went wrong. Try again."),
+        "authGoToLogin": MessageLookupByLibrary.simpleMessage(
+            "Already have an account? Log in"),
+        "authGoToRegister":
+            MessageLookupByLibrary.simpleMessage("Need an account? Register"),
+        "authLoginButton": MessageLookupByLibrary.simpleMessage("Log in"),
+        "authLoginTitle": MessageLookupByLibrary.simpleMessage("Log in"),
+        "authPasswordLabel": MessageLookupByLibrary.simpleMessage("Password"),
+        "authRegisterButton": MessageLookupByLibrary.simpleMessage("Register"),
+        "authRegisterTitle":
+            MessageLookupByLibrary.simpleMessage("Create account"),
         "homePageErrorTitle": MessageLookupByLibrary.simpleMessage(
             "Something went wrong, please try again"),
         "homePageLocationDisabledTitle": MessageLookupByLibrary.simpleMessage(
@@ -36,6 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "homePageSettingsButtonTitle":
             MessageLookupByLibrary.simpleMessage("Settings"),
         "homePageTemperature": m0,
+        "mainNavHome": MessageLookupByLibrary.simpleMessage("Home"),
+        "mainNavSearch": MessageLookupByLibrary.simpleMessage("Search"),
+        "mainNavSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "searchPagePlaceholder": MessageLookupByLibrary.simpleMessage(
+            "City search will be available here."),
         "settingsPageCloseButtonTitle":
             MessageLookupByLibrary.simpleMessage("Close"),
         "settingsPageLanguage":
@@ -52,6 +70,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Location permission granted"),
         "settingsPageLocationPermissionInfo":
             MessageLookupByLibrary.simpleMessage(
-                "To change location permissions, go to system settings")
+                "To change location permissions, go to system settings"),
+        "settingsPageLogoutTitle":
+            MessageLookupByLibrary.simpleMessage("Log out"),
+        "splashPageDontHaveAccountTitle": MessageLookupByLibrary.simpleMessage(
+            "Don\'t have an account? Sign up"),
+        "splashPageSignInButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Sign in"),
+        "splashPageWelcomeDescription": MessageLookupByLibrary.simpleMessage(
+            "Check the weather in your city, anywhere in the world."),
+        "splashPageWelcomeTitle":
+            MessageLookupByLibrary.simpleMessage("Welcome!")
       };
 }

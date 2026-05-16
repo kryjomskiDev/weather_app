@@ -150,6 +150,16 @@ class Strings {
     );
   }
 
+  /// `Log out`
+  String get settingsPageLogoutTitle {
+    return Intl.message(
+      'Log out',
+      name: 'settingsPageLogoutTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Location permission`
   String get settingsPageLocationPermission {
     return Intl.message(
@@ -185,6 +195,176 @@ class Strings {
     return Intl.message(
       'To change location permissions, go to system settings',
       name: 'settingsPageLocationPermissionInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in`
+  String get authLoginTitle {
+    return Intl.message(
+      'Log in',
+      name: 'authLoginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create account`
+  String get authRegisterTitle {
+    return Intl.message(
+      'Create account',
+      name: 'authRegisterTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get authEmailLabel {
+    return Intl.message(
+      'Email',
+      name: 'authEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get authPasswordLabel {
+    return Intl.message(
+      'Password',
+      name: 'authPasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in`
+  String get authLoginButton {
+    return Intl.message(
+      'Log in',
+      name: 'authLoginButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get authRegisterButton {
+    return Intl.message(
+      'Register',
+      name: 'authRegisterButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Need an account? Register`
+  String get authGoToRegister {
+    return Intl.message(
+      'Need an account? Register',
+      name: 'authGoToRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account? Log in`
+  String get authGoToLogin {
+    return Intl.message(
+      'Already have an account? Log in',
+      name: 'authGoToLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. Try again.`
+  String get authErrorGeneric {
+    return Intl.message(
+      'Something went wrong. Try again.',
+      name: 'authErrorGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get mainNavHome {
+    return Intl.message(
+      'Home',
+      name: 'mainNavHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get mainNavSearch {
+    return Intl.message(
+      'Search',
+      name: 'mainNavSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get mainNavSettings {
+    return Intl.message(
+      'Settings',
+      name: 'mainNavSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City search will be available here.`
+  String get searchPagePlaceholder {
+    return Intl.message(
+      'City search will be available here.',
+      name: 'searchPagePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome!`
+  String get splashPageWelcomeTitle {
+    return Intl.message(
+      'Welcome!',
+      name: 'splashPageWelcomeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check the weather in your city, anywhere in the world.`
+  String get splashPageWelcomeDescription {
+    return Intl.message(
+      'Check the weather in your city, anywhere in the world.',
+      name: 'splashPageWelcomeDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in`
+  String get splashPageSignInButtonTitle {
+    return Intl.message(
+      'Sign in',
+      name: 'splashPageSignInButtonTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account? Sign up`
+  String get splashPageDontHaveAccountTitle {
+    return Intl.message(
+      'Don\'t have an account? Sign up',
+      name: 'splashPageDontHaveAccountTitle',
       desc: '',
       args: [],
     );

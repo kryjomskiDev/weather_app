@@ -1,65 +1,57 @@
-import 'package:fimber_io/fimber_io.dart';
+import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:weather_app/domain/auth/use_case/sign_out_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/get_selected_language_code_use_case.dart';
 import 'package:weather_app/domain/locale/use_case/save_language_code_use_case.dart';
-import 'package:weather_app/domain/location/model/location_permission_status.dart';
-import 'package:weather_app/domain/location/use_case/check_location_permission_status_use_case.dart';
+import 'package:weather_app/presentation/pages/settings/cubit/settings_presentation_event.dart';
 import 'package:weather_app/presentation/pages/settings/cubit/settings_state.dart';
-import 'package:weather_app/utils/l10n_model.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
 import 'package:weather_app/utils/safety_cubit.dart';
 
 @injectable
-class SettingsCubit extends SafetyCubit<SettingsState> {
+class SettingsCubit extends SafetyCubit<SettingsState>
+    with BlocPresentationMixin<SettingsState, SettingsPresentationEvent> {
+  final SignOutUseCase _signOutUseCase;
   final GetSelectedLanguageCodeUseCase _getSelectedLanguageCodeUseCase;
   final SaveLanguageCodeUseCase _saveLanguageCodeUseCase;
-  final CheckLocationPermissionStatusUseCase _checkLocationPermissionStatusUseCase;
 
   SettingsCubit(
+    this._signOutUseCase,
     this._getSelectedLanguageCodeUseCase,
     this._saveLanguageCodeUseCase,
-    this._checkLocationPermissionStatusUseCase,
-  ) : super(const SettingsState.idle());
+  ) : super(const SettingsStateLoading());
 
   late String _selectedLanguageCode;
-  late LocationPermissionStatus _locationPermissionStatus;
 
   Future<void> init() async {
-    try {
-      emit(const SettingsState.loading());
-      _selectedLanguageCode = _getSelectedLanguageCodeUseCase() ?? englishLanguageCode;
-      _locationPermissionStatus = await _checkLocationPermissionStatusUseCase();
-
-      emit(SettingsState.loaded(
-        selectedLanguageCode: _selectedLanguageCode,
-        locationPermissionStatus: _locationPermissionStatus,
-      ));
-    } catch (error, st) {
-      Fimber.e('Error while initializing settings', ex: error, stacktrace: st);
-      emit(const SettingsState.error());
-    }
+    emit(const SettingsStateLoading());
+    _selectedLanguageCode = _getSelectedLanguageCodeUseCase();
+    emit(SettingsStateLoaded(selectedLanguageCode: _selectedLanguageCode));
   }
 
   Future<void> selectLanguage(String languageCode) async {
-    try {
-      emit(const SettingsState.loading());
+    emit(const SettingsStateLoading());
 
-      _selectedLanguageCode = languageCode;
-      await _saveLanguageCodeUseCase(languageCode);
+    final Either<GenericError, void> result = await _saveLanguageCodeUseCase(languageCode);
 
-      emit(const SettingsState.languageSelected());
-    } catch (error, st) {
-      Fimber.e('Error while selecting language', ex: error, stacktrace: st);
-      emit(const SettingsState.error());
-    }
+    result.fold(
+      (_) => emit(const SettingsStateError()),
+      (_) {
+        _selectedLanguageCode = languageCode;
+        emitPresentation(const LanguageSelectedEvent());
+      },
+    );
   }
 
-  void onLanguageSelected() => emit(SettingsState.loaded(
-        selectedLanguageCode: _selectedLanguageCode,
-        locationPermissionStatus: _locationPermissionStatus,
-      ));
+  void onLanguageSelected() => emit(SettingsStateLoaded(selectedLanguageCode: _selectedLanguageCode));
 
-  void closePage() {
-    emit(const SettingsState.idle());
-    emit(const SettingsState.closePage());
+  Future<void> logout() async {
+    final Either<GenericError, void> result = await _signOutUseCase();
+
+    result.fold(
+      (GenericError error) => emitPresentation(const LogoutFailedEvent()),
+      (_) {},
+    );
   }
 }

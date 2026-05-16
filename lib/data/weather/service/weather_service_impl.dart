@@ -1,8 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/data/weather/data_source/weather_api_data_source.dart';
 import 'package:weather_app/data/weather/model/weather_dto.dart';
 import 'package:weather_app/domain/weather/model/current_weather.dart';
 import 'package:weather_app/domain/weather/service/weather_service.dart';
+import 'package:weather_app/extensions/dio_error_extension.dart';
+import 'package:weather_app/utils/error_handling/either.dart';
+import 'package:weather_app/utils/error_handling/errors/generic_error.dart';
+import 'package:weather_app/utils/error_handling/errors/http_errors.dart';
+import 'package:weather_app/utils/error_handling/errors/other_errors.dart';
 
 @LazySingleton(as: WeatherService)
 class WeatherServiceImpl implements WeatherService {
@@ -11,17 +17,21 @@ class WeatherServiceImpl implements WeatherService {
   const WeatherServiceImpl(this._weatherApiDataSource);
 
   @override
-  Future<CurrentWeather> getCurrentWeather({
+  Future<Either<GenericError, CurrentWeather>> getCurrentWeather({
     required double latitude,
     required double longitude,
     required String languageCode,
   }) async {
-    final dto = await _weatherApiDataSource.getWeatherByCords(
-      latitude,
-      longitude,
-      languageCode,
-    );
+    try {
+      final WeatherDto dto = await _weatherApiDataSource.getWeatherByCords(latitude, longitude, languageCode);
 
-    return dto.toDomain();
+      return Success<GenericError, CurrentWeather>(dto.toDomain());
+    } on DioException catch (e) {
+      final HttpError error = e.handleException;
+
+      return Failure<GenericError, CurrentWeather>(error);
+    } catch (_) {
+      return const Failure<GenericError, CurrentWeather>(UnexpectedError(message: 'An unexpected error occurred'));
+    }
   }
 }
