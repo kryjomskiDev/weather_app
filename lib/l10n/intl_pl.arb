@@ -31,7 +31,11 @@
     "mainNavHome": "Główna",
     "mainNavSearch": "Szukaj",
     "mainNavSettings": "Ustawienia",
-    "searchPagePlaceholder": "Wyszukiwanie miasta pojawi się tutaj.",
+    "searchPageHint": "Nazwa miasta",
+    "searchPageEmptyMessage": "Wyszukaj miasto, aby zobaczyć aktualną pogodę.",
+    "searchPageErrorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
+    "searchPageCityNotFound": "Nie znaleziono miasta. Spróbuj innej nazwy.",
+    "searchPageTryAgain": "Spróbuj ponownie",
 
     "splashPageWelcomeTitle": "Witaj!",
     "splashPageWelcomeDescription": "Sprawdź pogodę w swoim mieście, w dowolnym miejscu na świecie.",

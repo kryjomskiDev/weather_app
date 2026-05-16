@@ -46,6 +46,8 @@ import '../domain/location/use_case/is_location_service_enabled_use_case.dart'
 import '../domain/location/use_case/request_location_permission_use_case.dart'
     as _i226;
 import '../domain/weather/service/weather_service.dart' as _i743;
+import '../domain/weather/use_case/get_current_weather_by_city_use_case.dart'
+    as _i674;
 import '../domain/weather/use_case/get_current_weather_use_case.dart' as _i464;
 import '../presentation/pages/home/cubit/home_cubit.dart' as _i852;
 import '../presentation/pages/login/cubit/login_cubit.dart' as _i139;
@@ -53,6 +55,7 @@ import '../presentation/pages/main/cubit/main_session_cubit.dart' as _i719;
 import '../presentation/pages/main/cubit/main_shell_session_cubit.dart'
     as _i955;
 import '../presentation/pages/register/cubit/register_cubit.dart' as _i904;
+import '../presentation/pages/search/cubit/search_cubit.dart' as _i799;
 import '../presentation/pages/settings/cubit/settings_cubit.dart' as _i427;
 import '../presentation/pages/splash/cubit/splash_cubit.dart' as _i386;
 import 'dio_injectable/dio_injectable.dart' as _i984;
@@ -130,6 +133,9 @@ Future<_i174.GetIt> $initGetIt(
   gh.lazySingleton<_i368.AuthService>(
     () => _i756.AuthServiceImpl(gh<_i32.AuthDataSource>()),
   );
+  gh.factory<_i674.GetCurrentWeatherByCityUseCase>(
+    () => _i674.GetCurrentWeatherByCityUseCase(gh<_i743.WeatherService>()),
+  );
   gh.factory<_i464.GetCurrentWeatherUseCase>(
     () => _i464.GetCurrentWeatherUseCase(gh<_i743.WeatherService>()),
   );
@@ -161,6 +167,12 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i386.SplashCubit>(
     () => _i386.SplashCubit(gh<_i80.GetCurrentAuthUserUseCase>()),
+  );
+  gh.factory<_i799.SearchCubit>(
+    () => _i799.SearchCubit(
+      gh<_i674.GetCurrentWeatherByCityUseCase>(),
+      gh<_i80.GetSelectedLanguageCodeUseCase>(),
+    ),
   );
   gh.factory<_i427.SettingsCubit>(
     () => _i427.SettingsCubit(

@@ -31,7 +31,11 @@
     "mainNavHome": "Home",
     "mainNavSearch": "Search",
     "mainNavSettings": "Settings",
-    "searchPagePlaceholder": "City search will be available here.",
+    "searchPageHint": "City name",
+    "searchPageEmptyMessage": "Search for a city to see the current weather.",
+    "searchPageErrorGeneric": "Something went wrong. Please try again.",
+    "searchPageCityNotFound": "City not found. Try a different name.",
+    "searchPageTryAgain": "Try again",
 
     "splashPageWelcomeTitle": "Welcome!",
     "splashPageWelcomeDescription": "Check the weather in your city, anywhere in the world.",

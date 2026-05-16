@@ -8,4 +8,9 @@ abstract interface class WeatherService {
     required double longitude,
     required String languageCode,
   });
+
+  Future<Either<GenericError, CurrentWeather>> getCurrentWeatherByCity({
+    required String city,
+    required String languageCode,
+  });
 }

@@ -66,4 +66,21 @@ class MockWeatherApiDataSource extends _i1.Mock
             ),
           )
           as _i4.Future<_i2.WeatherDto>);
+
+  @override
+  _i4.Future<_i2.WeatherDto> getWeatherByCity(
+    String? city,
+    String? lang, [
+    String? units = 'metric',
+  ]) =>
+      (super.noSuchMethod(
+            Invocation.method(#getWeatherByCity, [city, lang, units]),
+            returnValue: _i4.Future<_i2.WeatherDto>.value(
+              _FakeWeatherDto_0(
+                this,
+                Invocation.method(#getWeatherByCity, [city, lang, units]),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.WeatherDto>);
 }

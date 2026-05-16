@@ -95,5 +95,70 @@ void main() {
         ).called(1);
       });
     });
+
+    group('getCurrentWeatherByCity method', () {
+      const String city = 'London';
+      const String languageCode = 'en';
+
+      test('returns CurrentWeather successfully', () async {
+        const WeatherDto dto = WeatherDto(
+          'London',
+          <WeatherDetailsDto>[WeatherDetailsDto('Clear', 'clear sky', '01d')],
+          WeatherTempInfoDto(26.1),
+        );
+
+        const CurrentWeather expectedAnswer = CurrentWeather(
+          locationName: 'London',
+          description: 'clear sky',
+          icon: '01d',
+          temperature: 26.1,
+          title: 'Clear',
+        );
+
+        when(
+          weatherApiDataSource.getWeatherByCity(
+            city,
+            languageCode,
+          ),
+        ).thenAnswer((_) async => dto);
+
+        final Either<GenericError, CurrentWeather> result = await weatherService.getCurrentWeatherByCity(
+          city: city,
+          languageCode: languageCode,
+        );
+
+        expect(result.isSuccess(), isTrue);
+        expect(result.getOrElse(expectedAnswer), equals(expectedAnswer));
+        verify(
+          weatherApiDataSource.getWeatherByCity(
+            city,
+            languageCode,
+          ),
+        ).called(1);
+      });
+
+      test('returns Failure when data source fails', () async {
+        when(
+          weatherApiDataSource.getWeatherByCity(
+            city,
+            languageCode,
+          ),
+        ).thenThrow(Exception());
+
+        final Either<GenericError, CurrentWeather> result = await weatherService.getCurrentWeatherByCity(
+          city: city,
+          languageCode: languageCode,
+        );
+
+        expect(result.isFailure(), isTrue);
+
+        verify(
+          weatherApiDataSource.getWeatherByCity(
+            city,
+            languageCode,
+          ),
+        ).called(1);
+      });
+    });
   });
 }

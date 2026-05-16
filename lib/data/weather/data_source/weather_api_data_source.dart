@@ -20,4 +20,11 @@ abstract class WeatherApiDataSource {
     @Query(WeatherAppQuery.language) String lang, [
     @Query(WeatherAppQuery.units) String units = WeatherAppQuery.metric,
   ]);
+
+  @GET(WeatherAppEndpoints.currentWeather)
+  Future<WeatherDto> getWeatherByCity(
+    @Query(WeatherAppQuery.city) String city,
+    @Query(WeatherAppQuery.language) String lang, [
+    @Query(WeatherAppQuery.units) String units = WeatherAppQuery.metric,
+  ]);
 }

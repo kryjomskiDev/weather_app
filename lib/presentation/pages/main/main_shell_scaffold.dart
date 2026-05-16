@@ -32,7 +32,7 @@ class MainShellScaffold extends HookWidget with ExtensionMixin {
     useOnce(sessionCubit.init);
 
     return Scaffold(
-      backgroundColor: context.getColors().blue,
+      backgroundColor: context.getColors().surfaceLight,
       body: switch (state) {
         MainSessionStateLoading() => WeatherAppLoadingIndicator(color: context.getColors().white),
         MainSessionStateLoaded() => navigationShell,

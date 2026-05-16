@@ -18,8 +18,10 @@ class Strings {
   static Strings? _current;
 
   static Strings get current {
-    assert(_current != null,
-        'No instance of Strings was loaded. Try to initialize the Strings delegate before accessing Strings.current.');
+    assert(
+      _current != null,
+      'No instance of Strings was loaded. Try to initialize the Strings delegate before accessing Strings.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class Strings {
 
   static Strings of(BuildContext context) {
     final instance = Strings.maybeOf(context);
-    assert(instance != null,
-        'No instance of Strings present in the widget tree. Did you add Strings.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of Strings present in the widget tree. Did you add Strings.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -202,12 +206,7 @@ class Strings {
 
   /// `Log in`
   String get authLoginTitle {
-    return Intl.message(
-      'Log in',
-      name: 'authLoginTitle',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Log in', name: 'authLoginTitle', desc: '', args: []);
   }
 
   /// `Create account`
@@ -222,12 +221,7 @@ class Strings {
 
   /// `Email`
   String get authEmailLabel {
-    return Intl.message(
-      'Email',
-      name: 'authEmailLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Email', name: 'authEmailLabel', desc: '', args: []);
   }
 
   /// `Password`
@@ -242,12 +236,7 @@ class Strings {
 
   /// `Log in`
   String get authLoginButton {
-    return Intl.message(
-      'Log in',
-      name: 'authLoginButton',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Log in', name: 'authLoginButton', desc: '', args: []);
   }
 
   /// `Register`
@@ -292,22 +281,12 @@ class Strings {
 
   /// `Home`
   String get mainNavHome {
-    return Intl.message(
-      'Home',
-      name: 'mainNavHome',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Home', name: 'mainNavHome', desc: '', args: []);
   }
 
   /// `Search`
   String get mainNavSearch {
-    return Intl.message(
-      'Search',
-      name: 'mainNavSearch',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Search', name: 'mainNavSearch', desc: '', args: []);
   }
 
   /// `Settings`
@@ -320,11 +299,51 @@ class Strings {
     );
   }
 
-  /// `City search will be available here.`
-  String get searchPagePlaceholder {
+  /// `City name`
+  String get searchPageHint {
     return Intl.message(
-      'City search will be available here.',
-      name: 'searchPagePlaceholder',
+      'City name',
+      name: 'searchPageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a city to see the current weather.`
+  String get searchPageEmptyMessage {
+    return Intl.message(
+      'Search for a city to see the current weather.',
+      name: 'searchPageEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. Please try again.`
+  String get searchPageErrorGeneric {
+    return Intl.message(
+      'Something went wrong. Please try again.',
+      name: 'searchPageErrorGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City not found. Try a different name.`
+  String get searchPageCityNotFound {
+    return Intl.message(
+      'City not found. Try a different name.',
+      name: 'searchPageCityNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get searchPageTryAgain {
+    return Intl.message(
+      'Try again',
+      name: 'searchPageTryAgain',
       desc: '',
       args: [],
     );

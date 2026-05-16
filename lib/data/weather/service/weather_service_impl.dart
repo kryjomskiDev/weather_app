@@ -34,4 +34,22 @@ class WeatherServiceImpl implements WeatherService {
       return const Failure<GenericError, CurrentWeather>(UnexpectedError(message: 'An unexpected error occurred'));
     }
   }
+
+  @override
+  Future<Either<GenericError, CurrentWeather>> getCurrentWeatherByCity({
+    required String city,
+    required String languageCode,
+  }) async {
+    try {
+      final WeatherDto dto = await _weatherApiDataSource.getWeatherByCity(city, languageCode);
+
+      return Success<GenericError, CurrentWeather>(dto.toDomain());
+    } on DioException catch (e) {
+      final HttpError error = e.handleException;
+
+      return Failure<GenericError, CurrentWeather>(error);
+    } catch (_) {
+      return const Failure<GenericError, CurrentWeather>(UnexpectedError(message: 'An unexpected error occurred'));
+    }
+  }
 }
