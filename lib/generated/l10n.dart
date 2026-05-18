@@ -18,10 +18,8 @@ class Strings {
   static Strings? _current;
 
   static Strings get current {
-    assert(
-      _current != null,
-      'No instance of Strings was loaded. Try to initialize the Strings delegate before accessing Strings.current.',
-    );
+    assert(_current != null,
+        'No instance of Strings was loaded. Try to initialize the Strings delegate before accessing Strings.current.');
     return _current!;
   }
 
@@ -43,10 +41,8 @@ class Strings {
 
   static Strings of(BuildContext context) {
     final instance = Strings.maybeOf(context);
-    assert(
-      instance != null,
-      'No instance of Strings present in the widget tree. Did you add Strings.delegate in localizationsDelegates?',
-    );
+    assert(instance != null,
+        'No instance of Strings present in the widget tree. Did you add Strings.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -206,7 +202,12 @@ class Strings {
 
   /// `Log in`
   String get authLoginTitle {
-    return Intl.message('Log in', name: 'authLoginTitle', desc: '', args: []);
+    return Intl.message(
+      'Log in',
+      name: 'authLoginTitle',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Create account`
@@ -221,7 +222,12 @@ class Strings {
 
   /// `Email`
   String get authEmailLabel {
-    return Intl.message('Email', name: 'authEmailLabel', desc: '', args: []);
+    return Intl.message(
+      'Email',
+      name: 'authEmailLabel',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Password`
@@ -236,7 +242,12 @@ class Strings {
 
   /// `Log in`
   String get authLoginButton {
-    return Intl.message('Log in', name: 'authLoginButton', desc: '', args: []);
+    return Intl.message(
+      'Log in',
+      name: 'authLoginButton',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Register`
@@ -281,12 +292,22 @@ class Strings {
 
   /// `Home`
   String get mainNavHome {
-    return Intl.message('Home', name: 'mainNavHome', desc: '', args: []);
+    return Intl.message(
+      'Home',
+      name: 'mainNavHome',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Search`
   String get mainNavSearch {
-    return Intl.message('Search', name: 'mainNavSearch', desc: '', args: []);
+    return Intl.message(
+      'Search',
+      name: 'mainNavSearch',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Settings`
@@ -391,7 +412,12 @@ class Strings {
 
   /// `Loading`
   String get a11yLoading {
-    return Intl.message('Loading', name: 'a11yLoading', desc: '', args: []);
+    return Intl.message(
+      'Loading',
+      name: 'a11yLoading',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `{action}, loading`
@@ -426,16 +452,17 @@ class Strings {
 
   /// `Search`
   String get a11ySearchSubmit {
-    return Intl.message('Search', name: 'a11ySearchSubmit', desc: '', args: []);
+    return Intl.message(
+      'Search',
+      name: 'a11ySearchSubmit',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `{location}, {temperature}, {condition}, {description}`
-  String a11yCurrentWeatherSummary(
-    Object location,
-    Object temperature,
-    Object condition,
-    Object description,
-  ) {
+  String a11yCurrentWeatherSummary(Object location, Object temperature,
+      Object condition, Object description) {
     return Intl.message(
       '$location, $temperature, $condition, $description',
       name: 'a11yCurrentWeatherSummary',
@@ -466,7 +493,12 @@ class Strings {
 
   /// `selected`
   String get a11ySelected {
-    return Intl.message('selected', name: 'a11ySelected', desc: '', args: []);
+    return Intl.message(
+      'selected',
+      name: 'a11ySelected',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `not selected`

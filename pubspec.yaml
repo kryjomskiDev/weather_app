@@ -39,8 +39,6 @@ dependencies:
   firebase_crashlytics: 5.2.2
   firebase_auth: ^6.5.1
 
-
-  nested: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
