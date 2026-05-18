@@ -28,8 +28,8 @@ class LoginCubit extends SafetyCubit<LoginState> with BlocPresentationMixin<Logi
         emit(const LoginStateLoaded());
       },
       (_) {
+        /// Session expiration checker will handle the navigation
         emit(const LoginStateLoaded());
-        emitPresentation(const LoginNavigateHomeEvent());
       },
     );
   }

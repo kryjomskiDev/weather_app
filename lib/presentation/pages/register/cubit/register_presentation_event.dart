@@ -7,10 +7,6 @@ sealed class RegisterPresentationEvent extends Equatable {
   List<Object?> get props => <Object?>[];
 }
 
-class RegisterNavigateHomeEvent extends RegisterPresentationEvent {
-  const RegisterNavigateHomeEvent();
-}
-
 class RegisterShowAuthErrorSnackBarEvent extends RegisterPresentationEvent {
   const RegisterShowAuthErrorSnackBarEvent();
 }

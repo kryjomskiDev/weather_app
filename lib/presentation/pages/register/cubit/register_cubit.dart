@@ -29,8 +29,8 @@ class RegisterCubit extends SafetyCubit<RegisterState>
         emit(const RegisterStateLoaded());
       },
       (_) {
+        /// Session expiration checker will handle the navigation
         emit(const RegisterStateLoaded());
-        emitPresentation(const RegisterNavigateHomeEvent());
       },
     );
   }

@@ -7,10 +7,6 @@ sealed class LoginPresentationEvent extends Equatable {
   List<Object?> get props => <Object?>[];
 }
 
-class LoginNavigateHomeEvent extends LoginPresentationEvent {
-  const LoginNavigateHomeEvent();
-}
-
 class LoginShowAuthErrorSnackBarEvent extends LoginPresentationEvent {
   const LoginShowAuthErrorSnackBarEvent();
 }

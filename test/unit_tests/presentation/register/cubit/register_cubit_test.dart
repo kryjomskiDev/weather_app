@@ -69,7 +69,7 @@ void main() {
       ],
     );
 
-    test('emits RegisterNavigateHomeEvent on success', () async {
+    test('does not emit presentation events on success', () async {
       when(
         registerUseCase(email: email, password: password),
       ).thenAnswer((_) async => Either.success(authUser));
@@ -81,7 +81,7 @@ void main() {
       await cubit.register(email: email, password: password);
       await pumpEventQueue();
 
-      expect(events, contains(const RegisterNavigateHomeEvent()));
+      expect(events, isEmpty);
       await sub.cancel();
       await cubit.close();
     });
